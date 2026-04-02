@@ -529,6 +529,79 @@
     .cl-label { font-size: .7rem; color: var(--text-dim); }
     .cl-value { font-size: .87rem; font-weight: 500; }
 
+    /* ── ART / BEYOND THE RESUME ─────────────────────────── */
+    .art-intro {
+      font-size: .93rem; color: var(--text-mid); max-width: 640px;
+      margin-bottom: 2.8rem; line-height: 1.8;
+    }
+    .art-featured {
+      display: grid; grid-template-columns: 1fr 1.15fr; gap: 3rem;
+      margin-bottom: 3rem; align-items: start;
+    }
+    .art-featured-img-wrap {
+      border-radius: 10px; overflow: hidden;
+      box-shadow: var(--shadow-md); background: #f5f0ea;
+    }
+    .art-featured-img { width: 100%; display: block; }
+    .art-featured-title {
+      font-family: 'Playfair Display', serif; font-size: 1.25rem;
+      margin-bottom: .25rem; line-height: 1.35;
+    }
+    .art-featured-medium {
+      font-family: 'JetBrains Mono', monospace; font-size: .7rem;
+      color: var(--blue); letter-spacing: .08em;
+      margin-bottom: 1rem; display: block;
+    }
+    .art-featured-desc {
+      font-size: .9rem; color: var(--text-mid); line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+    .art-acc-btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: none; border: 1px solid var(--border); border-radius: 8px;
+      padding: .5rem .95rem; font-size: .8rem; font-weight: 500;
+      color: var(--blue); cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .art-acc-btn:hover { background: var(--bg2); border-color: var(--blue-bd); }
+    .art-acc-chevron { transition: transform .3s ease; flex-shrink: 0; }
+    .art-acc-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height .4s ease;
+    }
+    .art-acc-body.open { max-height: 700px; }
+    .art-acc-inner {
+      padding: 1.2rem 0 .4rem;
+      display: flex; flex-direction: column; gap: .9rem;
+    }
+    .art-acc-inner p { font-size: .86rem; color: var(--text-mid); line-height: 1.8; }
+    .art-gallery {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem;
+    }
+    .art-item {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; box-shadow: var(--shadow);
+      transition: box-shadow .25s, transform .25s;
+    }
+    .art-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .art-img-wrap { overflow: hidden; aspect-ratio: 3/4; background: #f5f0ea; }
+    .art-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center top;
+      display: block; transition: transform .5s ease;
+    }
+    .art-item:hover .art-img-wrap img { transform: scale(1.04); }
+    .art-caption { padding: 1rem 1.2rem 1.2rem; }
+    .art-caption-title {
+      font-family: 'Playfair Display', serif; font-size: 1rem;
+      display: block; margin-bottom: .15rem;
+    }
+    .art-caption-medium {
+      font-family: 'JetBrains Mono', monospace; font-size: .67rem;
+      color: var(--blue); letter-spacing: .07em;
+      display: block; margin-bottom: .55rem;
+    }
+    .art-caption-desc { font-size: .82rem; color: var(--text-mid); line-height: 1.7; }
+
     /* ── FOOTER ───────────────────────────────────────────── */
     footer {
       background: var(--bg2); border-top: 1px solid var(--border);
@@ -565,6 +638,7 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#research">Research</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#art">Art</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -751,6 +825,23 @@
       <div class="section-line"></div>
     </div>
     <div class="research-carousel-wrap">
+
+      <!-- Carousel Navigation (top) -->
+      <div class="carousel-nav" style="margin-bottom:1.4rem;margin-top:0;">
+        <button class="carousel-btn" onclick="prevSlide()" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="carousel-dots">
+          <button class="carousel-dot active" onclick="goToSlide(0)" aria-label="EEP Paper"></button>
+          <button class="carousel-dot" onclick="goToSlide(1)" aria-label="Fed Challenge"></button>
+          <button class="carousel-dot" onclick="goToSlide(2)" aria-label="LLM Bias"></button>
+        </div>
+        <button class="carousel-btn" onclick="nextSlide()" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <p class="carousel-counter" id="carouselCounter" style="margin-top:-.8rem;margin-bottom:1.2rem;">1 / 3 — EEP Paper</p>
+
       <div class="research-carousel-viewport">
 
       <!-- SLIDE 1: EEP PAPER -->
@@ -937,22 +1028,6 @@
 
       </div><!-- /research-carousel-viewport -->
 
-      <!-- Carousel Navigation -->
-      <div class="carousel-nav">
-        <button class="carousel-btn" onclick="prevSlide()" aria-label="Previous">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <div class="carousel-dots">
-          <button class="carousel-dot active" onclick="goToSlide(0)" aria-label="EEP Paper"></button>
-          <button class="carousel-dot" onclick="goToSlide(1)" aria-label="Fed Challenge"></button>
-          <button class="carousel-dot" onclick="goToSlide(2)" aria-label="LLM Bias"></button>
-        </div>
-        <button class="carousel-btn" onclick="nextSlide()" aria-label="Next">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
-      <p class="carousel-counter" id="carouselCounter">1 / 3 — EEP Paper</p>
-
     </div><!-- /research-carousel-wrap -->
   </div>
 </section>
@@ -1059,12 +1134,105 @@
 
 <div class="divider"></div>
 
+<!-- ART / BEYOND THE RESUME -->
+<section id="art">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">06 / Beyond the Resume</p>
+      <h2 class="section-title">Art & Illustration</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="art-intro">Outside of coursework and research, I paint and draw. Most of the work explores psychology, the body, and social pressure — usually through a recurring cast of skeletons, vines, and hands. The pieces below are a mix of graphite, ink, and oil.</p>
+
+    <!-- FEATURED PIECE -->
+    <div class="art-featured">
+      <div class="art-featured-img-wrap">
+        <img src="/Personal-Website/anxiety.jpeg" alt="The Body's Response to Chronic Anxiety and Stress" class="art-featured-img" />
+      </div>
+      <div class="art-featured-text">
+        <span class="rc-tag" style="display:inline-block;margin-bottom:.55rem;">Featured · 2025</span>
+        <h3 class="art-featured-title">The Body's Response to Chronic Anxiety and Stress</h3>
+        <span class="art-featured-medium">Ink, coffee wash, acrylic marker on paper</span>
+        <p class="art-featured-desc">
+          Most illustrations of anxiety capture the psychological or social dimensions — what it feels like, or how it's perceived. This piece tries to fill the gap: what is actually happening inside the body. It draws on the biology of chronic stress — the HPA axis, allostatic load, and the SAM system — and represents how medications like Escitalopram partially, but not completely, restore order.
+        </p>
+        <button class="art-acc-btn" onclick="toggleArtAcc()">
+          Read the explanation
+          <svg class="art-acc-chevron" id="art-acc-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="art-acc-body" id="art-acc-body">
+          <div class="art-acc-inner">
+            <p><strong>Allostatic Load.</strong> The vines wrapping around the brain and chest represent neural atrophy and declining muscle protein — hallmarks of prolonged HPA axis activation. The coffee stains on the canvas double as bone deterioration and the late nights caused by stress-related sleep disturbances. The chaotic scribbles are the feedback loop itself: stress triggers cortisol release, resistance builds, which demands even more cortisol, which compounds the damage.</p>
+            <p><strong>Sympatho-Adrenomedullary System.</strong> The heart sitting outside the ribcage represents the physical sensation of a panic attack — the feeling of your heart beating out of your chest. Vines around the throat simulate the shortness of breath that accompanies acute anxiety episodes.</p>
+            <p><strong>Mitigants.</strong> The magenta boxes — the only structured, geometric element in the piece — represent SSRIs like Escitalopram. They bring order to isolated corners of the composition. But the surrounding chaos remains: medication reduces cortisol, not everything.</p>
+            <a href="/Personal-Website/art_piece.pdf" class="rc-link" target="_blank" style="margin-top:.4rem;display:inline-flex;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M12 10v6m0 0-3-3m3 3 3-3M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2"/></svg>
+              Full Written Explanation (PDF)
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="art-gallery">
+
+      <div class="art-item">
+        <div class="art-img-wrap">
+          <img src="/Personal-Website/perfectionism.jpg" alt="Perfectionism" loading="lazy" />
+        </div>
+        <div class="art-caption">
+          <span class="art-caption-title">Perfectionism</span>
+          <span class="art-caption-medium">Graphite on paper</span>
+          <p class="art-caption-desc">Anxiety over imperfection preventing work from even starting — hands paused mid-motion, unable to commit to the first mark.</p>
+        </div>
+      </div>
+
+      <div class="art-item">
+        <div class="art-img-wrap">
+          <img src="/Personal-Website/stress.jpg" alt="Overworked" loading="lazy" />
+        </div>
+        <div class="art-caption">
+          <span class="art-caption-title">Overworked</span>
+          <span class="art-caption-medium">Ink on paper</span>
+          <p class="art-caption-desc">The external pressure many young people feel to overperform in everything — drowning in the volume of it, arms still reaching for more.</p>
+        </div>
+      </div>
+
+      <div class="art-item">
+        <div class="art-img-wrap">
+          <img src="/Personal-Website/expectations.jpg" alt="Expectations" loading="lazy" />
+        </div>
+        <div class="art-caption">
+          <span class="art-caption-title">Expectations</span>
+          <span class="art-caption-medium">Graphite and acrylic on paper</span>
+          <p class="art-caption-desc">Good intentions pulling a skeleton toward something better — even as the strings doing the pulling tear it apart. Vines as external forces that shape and damage simultaneously.</p>
+        </div>
+      </div>
+
+      <div class="art-item">
+        <div class="art-img-wrap">
+          <img src="/Personal-Website/better_future.JPG" alt="Better Future" loading="lazy" />
+        </div>
+        <div class="art-caption">
+          <span class="art-caption-title">Better Future</span>
+          <span class="art-caption-medium">Oil on canvas</span>
+          <p class="art-caption-desc">Hands connected by climbing vines — one pair blooming into flowers and light, the lowest coming apart at the seams. Growth and destruction from the same source.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- CONTACT -->
 <section id="contact" class="section-even">
   <div class="container">
     <div class="contact-inner">
       <div class="contact-text">
-        <div class="section-label" style="margin-bottom:.6rem;">06 / Contact</div>
+        <div class="section-label" style="margin-bottom:.6rem;">07 / Contact</div>
         <h2>Let's Connect</h2>
         <div class="section-line" style="margin-bottom:1.2rem;"></div>
         <p>Whether you're interested in discussing research, risk, or just want to connect — I'd love to hear from you.</p>
@@ -1106,6 +1274,14 @@
 </footer>
 
 <script>
+/* ── ART ACCORDION ───────────────────────────────────────── */
+function toggleArtAcc() {
+  const body = document.getElementById('art-acc-body');
+  const chev = document.getElementById('art-acc-chev');
+  const isOpen = body.classList.toggle('open');
+  chev.style.transform = isOpen ? 'rotate(180deg)' : '';
+}
+
 /* ── EXPERIENCE ACCORDION ────────────────────────────────── */
 function toggleExp(id) {
   const item = document.getElementById(id);
