@@ -70,74 +70,100 @@
     /* ── HERO ────────────────────────────────────────────── */
     #hero {
       min-height: 100vh;
-      display: flex; align-items: center;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, #eef2ff 0%, #f0f9ff 60%, #f8fafc 100%);
-      padding-top: 72px;
+      display: flex; align-items: flex-end;
     }
-    .hero-chalk {
+    .hero-bg-photo {
       position: absolute; inset: 0;
       background-image: url('/Personal-Website/teaching.png');
-      background-size: cover; background-position: center 20%;
-      opacity: .06;
+      background-size: cover;
+      background-position: center center;
     }
-    /* Subtle grid overlay */
-    .hero-grid {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(30,64,175,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30,64,175,.04) 1px, transparent 1px);
-      background-size: 60px 60px;
+    .hero-bg-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,15,30,0.15) 0%,
+        rgba(10,15,30,0.25) 40%,
+        rgba(10,15,30,0.78) 70%,
+        rgba(10,15,30,0.93) 100%
+      );
     }
     .hero-inner {
       position: relative; z-index: 2;
-      max-width: 1200px; margin: 0 auto;
-      padding: 4rem 4rem;
-      display: grid;
-      grid-template-columns: 1fr 500px;
-      gap: 4rem;
-      align-items: center;
+      width: 100%;
+      max-width: 780px;
+      padding: 0 4rem 5.5rem;
     }
     .hero-eyebrow {
       font-family: 'JetBrains Mono', monospace;
-      font-size: .73rem;
+      font-size: .72rem;
       letter-spacing: .2em;
       text-transform: uppercase;
-      color: var(--blue);
+      color: #93c5fd;
       margin-bottom: 1rem;
     }
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 5.5vw, 4.8rem);
+      font-size: clamp(3.2rem, 6vw, 5.2rem);
       font-weight: 700;
-      line-height: 1.05;
-      color: var(--text);
-      margin-bottom: 1.2rem;
+      line-height: 1.02;
+      color: #fff;
+      margin-bottom: 1rem;
     }
-    h1 em { color: var(--blue); font-style: italic; }
+    h1 em { color: #93c5fd; font-style: italic; }
+    /* teaching context tag — sits right under the name */
+    .hero-context {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      backdrop-filter: blur(8px);
+      border-radius: 6px;
+      padding: .45rem 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .hero-context-bar {
+      width: 2px; height: 28px;
+      background: #3b82f6;
+      border-radius: 1px; flex-shrink: 0;
+    }
+    .hero-context-text { display: flex; flex-direction: column; gap: .1rem; }
+    .hero-context-top {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem; letter-spacing: .14em; text-transform: uppercase;
+      color: #93c5fd; line-height: 1;
+    }
+    .hero-context-bottom {
+      font-size: .85rem; font-weight: 500; color: rgba(255,255,255,.92);
+    }
     .hero-tagline {
-      font-size: 1rem;
-      color: var(--text-mid);
-      max-width: 500px;
-      margin-bottom: 2rem;
+      font-size: .97rem;
+      color: rgba(255,255,255,.75);
+      max-width: 520px;
+      margin-bottom: 1.8rem;
       line-height: 1.8;
     }
     .hero-badges {
-      display: flex; flex-wrap: wrap; gap: .55rem;
-      margin-bottom: 2.4rem;
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      margin-bottom: 2.2rem;
     }
     .badge {
       display: inline-flex; align-items: center; gap: .4rem;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,.2);
       border-radius: 100px;
       padding: .28rem .9rem;
-      font-size: .74rem;
+      font-size: .73rem;
       font-weight: 500;
-      color: var(--text-dim);
-      background: var(--bg);
+      color: rgba(255,255,255,.8);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(4px);
     }
-    .badge.blue { border-color: var(--blue-bd); color: var(--blue); background: var(--blue-lt); }
+    .badge.blue {
+      border-color: rgba(147,197,253,.4);
+      color: #93c5fd;
+      background: rgba(30,64,175,.35);
+    }
     .badge .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
     .hero-cta { display: flex; gap: .9rem; flex-wrap: wrap; }
     .btn {
@@ -149,56 +175,17 @@
     }
     .btn-primary { background: var(--blue); color: #fff; border: 1px solid var(--blue); }
     .btn-primary:hover { background: #1d3a99; border-color: #1d3a99; }
-    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
-
-    /* hero photo */
-    .hero-photo-wrap {
-      position: relative;
-      display: flex; flex-direction: column; gap: 0;
-    }
-    .hero-photo {
-      width: 100%; height: 300px;
-      object-fit: cover; object-position: center 30%;
-      border-radius: 12px 12px 0 0;
-      display: block;
-      box-shadow: var(--shadow-md);
-    }
-    .hero-photo-caption {
-      background: var(--text);
-      color: #fff;
-      border-radius: 0 0 12px 12px;
-      padding: .85rem 1.2rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-      box-shadow: var(--shadow-md);
-    }
-    .hero-photo-caption-left { display: flex; flex-direction: column; gap: .15rem; }
-    .caption-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .65rem; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--blue-bd); line-height: 1;
-    }
-    .caption-title {
-      font-size: .88rem; font-weight: 500; color: #fff;
-    }
-    .caption-badge {
-      flex-shrink: 0;
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 6px;
-      padding: .3rem .7rem;
-      font-size: .72rem; font-weight: 500; color: var(--blue-bd);
-      white-space: nowrap;
-    }
+    .btn-outline { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.3); backdrop-filter: blur(4px); }
+    .btn-outline:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.6); }
 
     /* scroll hint */
     .scroll-hint {
-      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 2rem; right: 4rem;
       display: flex; flex-direction: column; align-items: center; gap: .4rem;
-      color: var(--text-dim); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
-      opacity: .5; animation: bob 2.2s ease-in-out infinite;
+      color: rgba(255,255,255,.4); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+      animation: bob 2.2s ease-in-out infinite;
     }
-    @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 
     /* ── SECTION SHELL ────────────────────────────────────── */
     section { padding: 6.5rem 4rem; }
@@ -499,8 +486,7 @@
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 1000px) {
       .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .hero-photo-wrap { display: none; }
-      .hero-inner { grid-template-columns: 1fr; }
+      .hero-inner { padding: 0 1.5rem 4rem; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
     }
@@ -530,40 +516,31 @@
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-chalk"></div>
-  <div class="hero-grid"></div>
+  <div class="hero-bg-photo"></div>
+  <div class="hero-bg-overlay"></div>
   <div class="hero-inner">
-    <div class="hero-text">
-      <p class="hero-eyebrow">// Economics · Data Science · Quantitative Finance</p>
-      <h1>Jacob<br><em>Waldo</em></h1>
-      <p class="hero-tagline">
-        Incoming <strong>Market Risk Analyst at Goldman Sachs</strong> ·
-        Researcher at USC · FRM Part I — top quartile across all four domains.
-      </p>
-      <div class="hero-badges">
-        <span class="badge blue"><span class="dot"></span>Goldman Sachs — Summer 2026</span>
-        <span class="badge"><span class="dot"></span>USC GPA 3.95 / 4.0</span>
-        <span class="badge"><span class="dot"></span>FRM® Part I Certified</span>
-        <span class="badge"><span class="dot"></span>Palo Alto, CA</span>
-      </div>
-      <div class="hero-cta">
-        <a href="https://drive.google.com/file/d/1h-Wy5k-q3RvWpvC5XXOeFl1ttr2hpMWs/view?usp=drive_link" class="btn btn-primary" target="_blank">View Résumé</a>
-        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    <p class="hero-eyebrow">// Economics · Data Science · Quantitative Finance</p>
+    <h1>Jacob<br><em>Waldo</em></h1>
+    <div class="hero-context">
+      <div class="hero-context-bar"></div>
+      <div class="hero-context-text">
+        <span class="hero-context-top">Supplemental Instruction Leader · USC Dornsife</span>
+        <span class="hero-context-bottom">ECON 317: Statistics for Economists &nbsp;·&nbsp; ~100 students / week</span>
       </div>
     </div>
-    <div class="hero-photo-wrap">
-      <img class="hero-photo" src="/Personal-Website/teaching.png" alt="Jacob Waldo teaching ECON 317 at USC" />
-      <div class="hero-photo-caption">
-        <div class="hero-photo-caption-left">
-          <span class="caption-label">Supplemental Instruction · USC Dornsife</span>
-          <span class="caption-title">ECON 317: Statistics for Economists</span>
-        </div>
-        <span class="caption-badge">~100 students / week</span>
-      </div>
-      <div class="hero-photo-tag" style="display:none">
-        <span class="tag-big">GS '26</span>
-        <span style="font-size:.73rem;color:var(--text-dim)">Market Risk Analyst</span>
-      </div>
+    <p class="hero-tagline">
+      Incoming <strong style="color:#fff;font-weight:600;">Market Risk Analyst at Goldman Sachs</strong> ·
+      Researcher at USC · FRM Part I — top quartile across all four domains.
+    </p>
+    <div class="hero-badges">
+      <span class="badge blue"><span class="dot"></span>Goldman Sachs — Summer 2026</span>
+      <span class="badge"><span class="dot"></span>USC GPA 3.95 / 4.0</span>
+      <span class="badge"><span class="dot"></span>FRM® Part I Certified</span>
+      <span class="badge"><span class="dot"></span>Palo Alto, CA</span>
+    </div>
+    <div class="hero-cta">
+      <a href="https://drive.google.com/file/d/1h-Wy5k-q3RvWpvC5XXOeFl1ttr2hpMWs/view?usp=drive_link" class="btn btn-primary" target="_blank">View Résumé</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
     </div>
   </div>
   <div class="scroll-hint">
@@ -596,7 +573,7 @@
       </div>
       <div class="about-edu">
         <img src="/Personal-Website/Untitled_Artwork.jpeg" alt="Jacob Waldo"
-             style="width:120px;height:120px;object-fit:cover;object-position:top;border-radius:50%;border:3px solid var(--blue-bd);box-shadow:var(--shadow);margin-bottom:.4rem;" />
+             style="width:120px;height:120px;object-fit:cover;object-position:center 12%;border-radius:50%;border:3px solid var(--blue-bd);box-shadow:var(--shadow);margin-bottom:.4rem;" />
         <div class="edu-card">
           <div class="edu-school">University of Southern California</div>
           <div class="edu-degree">B.S. Economics & Data Science · Minor in Mathematics</div>
