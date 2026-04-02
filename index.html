@@ -82,18 +82,15 @@
     }
     .hero-bg-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(10,15,30,0.15) 0%,
-        rgba(10,15,30,0.25) 40%,
-        rgba(10,15,30,0.78) 70%,
-        rgba(10,15,30,0.93) 100%
-      );
+      background:
+        linear-gradient(to right, rgba(10,15,30,0) 30%, rgba(10,15,30,0.82) 62%, rgba(10,15,30,0.96) 100%),
+        linear-gradient(to bottom, rgba(10,15,30,0) 65%, rgba(10,15,30,0.45) 100%);
     }
     .hero-inner {
       position: relative; z-index: 2;
       width: 100%;
-      max-width: 780px;
+      max-width: 560px;
+      margin-left: auto;
       padding: 0 4rem 5.5rem;
     }
     .hero-eyebrow {
@@ -485,8 +482,7 @@
 
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 1000px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .hero-inner { padding: 0 1.5rem 4rem; }
+      .hero-inner { padding: 0 1.5rem 4rem; margin-left: 0; max-width: 100%; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
     }
@@ -519,13 +515,13 @@
   <div class="hero-bg-photo"></div>
   <div class="hero-bg-overlay"></div>
   <div class="hero-inner">
-    <p class="hero-eyebrow">// Economics · Data Science · Quantitative Finance</p>
+    <p class="hero-eyebrow">// Economics · Data Science · Finance</p>
     <h1>Jacob<br><em>Waldo</em></h1>
     <div class="hero-context">
       <div class="hero-context-bar"></div>
       <div class="hero-context-text">
         <span class="hero-context-top">Supplemental Instruction Leader · USC Dornsife</span>
-        <span class="hero-context-bottom">ECON 317: Statistics for Economists &nbsp;·&nbsp; ~100 students / week</span>
+        <span class="hero-context-bottom">ECON 317: Statistics for Economists &nbsp;·&nbsp; ~100 students / semester</span>
       </div>
     </div>
     <p class="hero-tagline">
@@ -558,7 +554,7 @@
       <div>
         <div class="section-header">
           <p class="section-label">01 / About</p>
-          <h2 class="section-title">Quantitative Thinker,<br><em style="font-style:italic;color:var(--blue)">Educator & Researcher</em></h2>
+          <h2 class="section-title">Economist, Educator,<br><em style="font-style:italic;color:var(--blue)">& Researcher</em></h2>
           <div class="section-line"></div>
         </div>
         <div class="about-text">
@@ -588,7 +584,7 @@
         </div>
         <div style="background: var(--blue-lt); border: 1px solid var(--blue-bd); border-radius: 10px; padding: 1.4rem 1.6rem;">
           <p style="font-size:.82rem;color:var(--blue);font-weight:600;margin-bottom:.4rem;">Teaching · Statistics for Economists</p>
-          <p style="font-size:.8rem;color:var(--text-mid);">3 weekly lectures, ~100 students — one of only 2 SI Leaders for economics at USC.</p>
+          <p style="font-size:.8rem;color:var(--text-mid);">3 sessions per week, ~100 students per semester — one of only 2 SI Leaders in USC's economics department.</p>
         </div>
       </div>
     </div>
@@ -612,7 +608,7 @@
         <h3 class="timeline-role">Summer Market Risk Analyst</h3>
         <p class="timeline-org">Goldman Sachs · Market Risk Division · Dallas, TX</p>
         <ul class="timeline-bullets">
-          <li>Joining the <strong>Market Risk Division</strong> for Summer 2026, applying quantitative finance training to real-world risk analysis in global markets.</li>
+          <li>Joining the <strong>Market Risk Division</strong> for Summer 2026.</li>
         </ul>
       </div>
 
@@ -621,8 +617,8 @@
         <h3 class="timeline-role">Supplemental Instruction Leader</h3>
         <p class="timeline-org">USC Dornsife Next Generation Science Programs · Los Angeles, CA</p>
         <ul class="timeline-bullets">
-          <li>Deliver <strong>3 weekly lectures</strong> for ~100 undergraduates in ECON 317 (Statistics for Economists), creating notes, problem sets, and exam reviews.</li>
-          <li>Serve as <strong>1 of only 2 SI Leaders</strong> in USC's economics department, supporting 1,000+ undergraduates.</li>
+          <li>Run <strong>3 sessions per week</strong> for ~100 undergraduates per semester in ECON 317 (Statistics for Economists), writing notes, problem sets, and exam reviews from scratch.</li>
+          <li>One of only <strong>2 SI Leaders</strong> in USC's economics department.</li>
         </ul>
       </div>
 
@@ -670,15 +666,18 @@
           <div>
             <h3 class="rc-title">Determinants of the Early-Exercise Premium for American Puts</h3>
             <p class="rc-desc">
-              Led a 3-person team at USC investigating what drives the premium of American-style put options over their European counterparts in the SPY options chain.
-              Used Bloomberg Terminal data, a Monte Carlo simulation framework (1,000 antithetic variate pairs), and GPU-accelerated computation (CuPy) to infer the latent
-              early-exercise premium — a variable that cannot be directly observed in markets.
-              Regressed ln(EEP) on time-to-maturity and implied volatility using an ARMA(3,0,3) model to account for autocorrelation.
+              Built a reusable framework to infer the Early-Exercise Premium (EEP) — the additional value of an American put over its European counterpart — directly from American option chains, without requiring European comparables.
+              The core idea: bound EEP between no-arbitrage limits derived from put-call parity, then use Monte Carlo simulation (1,000 runs, ~486k simulated points with antithetic variates) to sample the latent premium within those bounds.
+              Bounds calculation was fully automated for reproducibility and scalability, and GPU acceleration (CuPy) reduced runtime 26× — from 5.6s to 0.2s on workloads equivalent to 25M option pricing rows.
+            </p>
+            <p class="rc-desc" style="margin-top:-.4rem;">
+              Applied to a single SPY $560 put chain (Bloomberg Terminal data) and confirmed with &gt;99.99% confidence that EEP declines as expiration approaches and rises with implied volatility — consistent with theory.
+              The specific regression results are not meant to generalize beyond this chain; the contribution is the framework itself, which can be reapplied to other underlyings, strikes, and time periods.
             </p>
             <div class="rc-pills">
-              <span class="pill">Options Pricing</span><span class="pill">Monte Carlo</span>
+              <span class="pill">No-Arbitrage Bounds</span><span class="pill">Monte Carlo</span>
               <span class="pill">Bloomberg Terminal</span><span class="pill">ARMA(3,0,3)</span>
-              <span class="pill">CuPy / GPU</span><span class="pill">Put-Call Parity</span>
+              <span class="pill">CuPy / GPU · 26× speedup</span><span class="pill">Put-Call Parity</span>
             </div>
             <a href="https://drive.google.com/file/d/1Av0wUoMHgb99IhB18WmvCSNc3_1UbA9S/view?usp=drive_link" class="rc-link" target="_blank">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 10v6m0 0-3-3m3 3 3-3M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2"/></svg>
@@ -946,7 +945,7 @@
         <div class="section-label" style="margin-bottom:.6rem;">06 / Contact</div>
         <h2>Let's Connect</h2>
         <div class="section-line" style="margin-bottom:1.2rem;"></div>
-        <p>Whether you're interested in discussing quantitative research, market risk, or just want to connect — I'd love to hear from you.</p>
+        <p>Whether you're interested in discussing research, risk, or just want to connect — I'd love to hear from you.</p>
       </div>
       <div class="contact-links">
         <a class="contact-link" href="mailto:jake.l.waldo@gmail.com">
