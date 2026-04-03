@@ -835,7 +835,7 @@
           <div class="timeline-body-inner">
             <ul class="timeline-bullets">
               <li>Investigating <strong>inherent bias in LLMs</strong> (GPT-5, GPT-5 Nano, Ollama, Gemini) across viewpoint, sentiment, and context.</li>
-              <li>Built a <strong>LangGraph summarization pipeline</strong> with attention-inspired MapReduce refinement — cutting 40+ page review from ~1 hour to under 5 minutes.</li>
+              <li>Built a <strong>LangGraph summarization pipeline</strong> with attention-inspired MapReduce refinement, cutting 40+ page review from ~1 hour to under 5 minutes.</li>
             </ul>
           </div>
         </div>
@@ -911,9 +911,9 @@
           <div>
             <h3 class="rc-title">Determinants of the Early-Exercise Premium for American Puts</h3>
             <p class="rc-desc">
-              Built a reusable framework to infer the Early-Exercise Premium (EEP) — the additional value of an American put over its European counterpart — directly from American option chains, without requiring European comparables.
+              Built a reusable framework to infer the Early-Exercise Premium (EEP), the additional value of an American put over its European counterpart, directly from American option chains without requiring European comparables.
               The core idea: bound EEP between no-arbitrage limits derived from put-call parity, then use Monte Carlo simulation (1,000 runs, ~486k simulated points with antithetic variates) to sample the latent premium within those bounds.
-              Bounds calculation was fully automated for reproducibility and scalability, and GPU acceleration (CuPy) reduced runtime 26× — from 5.6s to 0.2s on workloads equivalent to 25M option pricing rows.
+              Bounds calculation was fully automated for reproducibility and scalability, and GPU acceleration (CuPy) reduced runtime 26× (from 5.6s to 0.2s) on workloads equivalent to 25M option pricing rows.
             </p>
             <p class="rc-desc" style="margin-top:-.4rem;">
               Applied to a single SPY $560 put chain (Bloomberg Terminal data) and confirmed with &gt;99.99% confidence that EEP declines as expiration approaches and rises with implied volatility — consistent with theory.
@@ -951,7 +951,7 @@
               <canvas id="chartBounds"></canvas>
             </div>
             <p class="coef-note">
-              EEP bounds for a single option chain: <strong>SPY put, strike $560, expiring June 20, 2025</strong>. 150 daily observations (t=1–241) sourced from Bloomberg Terminal. EEP<sub>max</sub> and EEP<sub>min</sub> are derived from put-call parity bounds adjusted for dividends and bid-ask spreads. The corridor narrows as expiration approaches — confirming the paper's central finding.
+              EEP bounds for a single option chain: <strong>SPY put, strike $560, expiring June 20, 2025</strong>. 150 daily observations (t=1–241) sourced from Bloomberg Terminal. EEP<sub>max</sub> and EEP<sub>min</sub> are derived from put-call parity bounds adjusted for dividends and bid-ask spreads. The corridor narrows as expiration approaches, confirming the paper's central finding.
             </p>
           </div>
 
@@ -1008,13 +1008,18 @@
           <div>
             <h3 class="rc-title">College Federal Reserve Challenge — Team Analyst</h3>
             <p class="rc-desc">
-              Represented USC as part of a 5-member team in the national Fed Challenge, a monetary policy
-              case competition judged by Federal Reserve economists. Analyzed macroeconomic indicators and Bloomberg Terminal
-              futures/option chain data to develop and present a policy recommendation: <em>"Navigating Monetary Policy with No Risk-Free Path"</em> at the FOMC-style October 2025 meeting.
+              Competed as part of a USC team in the College Fed Challenge, a national competition judged by Federal Reserve economists where teams simulate an FOMC meeting and defend a rate decision. Our October 2025 presentation, <em>"Navigating Monetary Policy with No Risk-Free Path,"</em> assessed four areas of the economy: growth, inflation, the labor market, and financial conditions.
+            </p>
+            <p class="rc-desc">
+              The core tension we identified: inflation was still running well above target (Core CPI at 2.9%, Core PCE at ~3.1%, PPI at 4.6%), with 1-year inflation expectations rising back to 3.4% — all pointing to unfinished business on price stability. The labor market, while soft in spots (June 2025 marked the first net job loss since COVID), was broadly balanced: the unemployment-to-job-openings ratio had returned to 1:1, and the Sahm Rule indicator had declined to 0.24%, suggesting gradual cooling rather than a recessionary break.
+            </p>
+            <p class="rc-desc">
+              Our recommendation at the October 2025 meeting was to hold the Fed Funds Rate at 4.0–4.25%. We argued that further cuts would exacerbate still-elevated inflation without providing meaningful relief to a labor market that was softening gradually, not collapsing. We also flagged that markets were pricing in 50 bps of additional cuts by year-end, making a hold a credibility-reinforcing signal on the Fed's inflation commitment.
             </p>
             <div class="rc-pills">
               <span class="pill">Monetary Policy</span><span class="pill">Macro Analysis</span>
               <span class="pill">Bloomberg Terminal</span><span class="pill">Fed Challenge</span>
+              <span class="pill">CPI / PCE / PPI</span><span class="pill">Labor Market</span>
             </div>
           </div>
         </div>
@@ -1193,7 +1198,7 @@
       <h2 class="section-title">Art & Illustration</h2>
       <div class="section-line"></div>
     </div>
-    <p class="art-intro">Outside of coursework and research, I paint and draw. Most of the work explores psychology, the body, and social pressure — usually through a recurring cast of skeletons, vines, and hands. The pieces below are a mix of graphite, ink, and oil.</p>
+    <p class="art-intro">Outside of coursework and research, I paint and draw. Most of the work explores psychology, the body, and social pressure, usually through a recurring cast of skeletons, vines, and hands. The pieces below are a mix of graphite, ink, and oil.</p>
 
     <!-- FEATURED PIECE -->
     <div class="art-featured">
@@ -1205,7 +1210,7 @@
         <h3 class="art-featured-title">The Body's Response to Chronic Anxiety and Stress</h3>
         <span class="art-featured-medium">Ink, coffee wash, acrylic marker on paper</span>
         <p class="art-featured-desc">
-          Most illustrations of anxiety capture the psychological or social dimensions — what it feels like, or how it's perceived. This piece tries to fill the gap: what is actually happening inside the body. It draws on the biology of chronic stress — the HPA axis, allostatic load, and the SAM system — and represents how medications like Escitalopram partially, but not completely, restore order.
+          Most illustrations of anxiety focus on the psychological or social dimensions: what it feels like, or how it's perceived. This piece tries to fill a different gap, asking what is actually happening inside the body. It draws on the biology of chronic stress (the HPA axis, allostatic load, and the SAM system) and looks at how medications like Escitalopram partially, but not completely, restore order.
         </p>
         <button class="art-acc-btn" onclick="toggleArtAcc()">
           Read the explanation
@@ -1213,9 +1218,9 @@
         </button>
         <div class="art-acc-body" id="art-acc-body">
           <div class="art-acc-inner">
-            <p><strong>Allostatic Load.</strong> The vines wrapping around the brain and chest represent neural atrophy and declining muscle protein — hallmarks of prolonged HPA axis activation. The coffee stains on the canvas double as bone deterioration and the late nights caused by stress-related sleep disturbances. The chaotic scribbles are the feedback loop itself: stress triggers cortisol release, resistance builds, which demands even more cortisol, which compounds the damage.</p>
-            <p><strong>Sympatho-Adrenomedullary System.</strong> The heart sitting outside the ribcage represents the physical sensation of a panic attack — the feeling of your heart beating out of your chest. Vines around the throat simulate the shortness of breath that accompanies acute anxiety episodes.</p>
-            <p><strong>Mitigants.</strong> The magenta boxes — the only structured, geometric element in the piece — represent SSRIs like Escitalopram. They bring order to isolated corners of the composition. But the surrounding chaos remains: medication reduces cortisol, not everything.</p>
+            <p><strong>Allostatic Load.</strong> The vines wrapping around the brain and chest represent neural atrophy and declining muscle protein, both hallmarks of prolonged HPA axis activation. The coffee stains on the canvas stand in for bone deterioration and the late nights caused by stress-related sleep disturbances. The chaotic scribbles are the feedback loop itself: stress triggers cortisol release, resistance builds, which demands even more cortisol, which compounds the damage.</p>
+            <p><strong>Sympatho-Adrenomedullary System.</strong> The heart sitting outside the ribcage represents the physical sensation of a panic attack, specifically the feeling of your heart beating out of your chest. Vines around the throat simulate the shortness of breath that accompanies acute anxiety episodes.</p>
+            <p><strong>Mitigants.</strong> The magenta boxes are the only structured, geometric element in the piece, representing SSRIs like Escitalopram. They bring order to isolated corners of the composition. But the surrounding chaos remains: medication reduces cortisol, not everything.</p>
             <a href="https://drive.google.com/file/d/1Nai_FU5WkTQa91HhIpHHQtPwyo7PO7s_/view?usp=drive_link" class="rc-link" target="_blank" style="margin-top:.4rem;display:inline-flex;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M12 10v6m0 0-3-3m3 3 3-3M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2"/></svg>
               Full Written Explanation (PDF)
@@ -1235,7 +1240,7 @@
         <div class="art-caption">
           <span class="art-caption-title">Perfectionism</span>
           <span class="art-caption-medium">Graphite on paper</span>
-          <p class="art-caption-desc">Anxiety over imperfection preventing work from even starting — hands paused mid-motion, unable to commit to the first mark.</p>
+          <p class="art-caption-desc">Anxiety over imperfection preventing work from even starting. Hands paused mid-motion, unable to commit to the first mark.</p>
         </div>
       </div>
 
@@ -1246,7 +1251,7 @@
         <div class="art-caption">
           <span class="art-caption-title">Overworked</span>
           <span class="art-caption-medium">Ink on paper</span>
-          <p class="art-caption-desc">The external pressure many young people feel to overperform in everything — drowning in the volume of it, arms still reaching for more.</p>
+          <p class="art-caption-desc">The external pressure many young people feel to overperform in everything. Drowning in the volume of it, arms still reaching for more.</p>
         </div>
       </div>
 
@@ -1257,7 +1262,7 @@
         <div class="art-caption">
           <span class="art-caption-title">Puppeteer</span>
           <span class="art-caption-medium">Graphite and acrylic on paper</span>
-          <p class="art-caption-desc">External forces pulling the strings — vivid, willful hands above controlling a skeleton that has no say in the direction it moves.</p>
+          <p class="art-caption-desc">External forces pulling the strings. Vivid, willful hands above controlling a skeleton that has no say in the direction it moves.</p>
         </div>
       </div>
 
@@ -1268,7 +1273,7 @@
         <div class="art-caption">
           <span class="art-caption-title">Expectations</span>
           <span class="art-caption-medium">Oil on canvas</span>
-          <p class="art-caption-desc">Good intentions dragging the bottom hand into a better environment — even as the process destroys it. The vines that carry the flowers also unravel the hand below.</p>
+          <p class="art-caption-desc">Good intentions dragging the bottom hand into a better environment, even as the process destroys it. The vines that carry the flowers also unravel the hand below.</p>
         </div>
       </div>
 
