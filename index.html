@@ -576,31 +576,58 @@
     }
     .art-acc-inner p { font-size: .86rem; color: var(--text-mid); line-height: 1.8; }
     .art-gallery {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;
     }
     .art-item {
-      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
       overflow: hidden; box-shadow: var(--shadow);
       transition: box-shadow .25s, transform .25s;
     }
     .art-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .art-img-wrap { overflow: hidden; aspect-ratio: 3/4; background: #f5f0ea; }
+    .art-img-wrap { overflow: hidden; aspect-ratio: 3/4; background: #f5f0ea; cursor: zoom-in; }
     .art-img-wrap img {
       width: 100%; height: 100%; object-fit: cover; object-position: center top;
       display: block; transition: transform .5s ease;
     }
-    .art-item:hover .art-img-wrap img { transform: scale(1.04); }
-    .art-caption { padding: 1rem 1.2rem 1.2rem; }
+    .art-item:hover .art-img-wrap img { transform: scale(1.05); }
+    .art-caption { padding: .7rem .9rem .9rem; }
     .art-caption-title {
-      font-family: 'Playfair Display', serif; font-size: 1rem;
-      display: block; margin-bottom: .15rem;
+      font-family: 'Playfair Display', serif; font-size: .9rem;
+      display: block; margin-bottom: .1rem;
     }
     .art-caption-medium {
-      font-family: 'JetBrains Mono', monospace; font-size: .67rem;
-      color: var(--blue); letter-spacing: .07em;
-      display: block; margin-bottom: .55rem;
+      font-family: 'JetBrains Mono', monospace; font-size: .62rem;
+      color: var(--blue); letter-spacing: .06em;
+      display: block; margin-bottom: .45rem;
     }
-    .art-caption-desc { font-size: .82rem; color: var(--text-mid); line-height: 1.7; }
+    .art-caption-desc { font-size: .78rem; color: var(--text-mid); line-height: 1.65; }
+    /* Lightbox */
+    .lightbox-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(5,10,20,.88); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
+      cursor: zoom-out;
+    }
+    .lightbox-overlay.open { opacity: 1; visibility: visible; }
+    .lightbox-img {
+      max-width: 88vw; max-height: 88vh; object-fit: contain;
+      border-radius: 6px; box-shadow: 0 30px 60px rgba(0,0,0,.6);
+      transform: scale(.96); transition: transform .3s ease;
+      pointer-events: none;
+    }
+    .lightbox-overlay.open .lightbox-img { transform: scale(1); }
+    .lightbox-close {
+      position: absolute; top: 1.4rem; right: 1.4rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%; width: 36px; height: 36px;
+      color: #fff; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s; pointer-events: auto;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,.22); }
+    .art-featured-img-wrap { cursor: zoom-in; }
 
     /* ── FOOTER ───────────────────────────────────────────── */
     footer {
@@ -1165,7 +1192,7 @@
             <p><strong>Allostatic Load.</strong> The vines wrapping around the brain and chest represent neural atrophy and declining muscle protein — hallmarks of prolonged HPA axis activation. The coffee stains on the canvas double as bone deterioration and the late nights caused by stress-related sleep disturbances. The chaotic scribbles are the feedback loop itself: stress triggers cortisol release, resistance builds, which demands even more cortisol, which compounds the damage.</p>
             <p><strong>Sympatho-Adrenomedullary System.</strong> The heart sitting outside the ribcage represents the physical sensation of a panic attack — the feeling of your heart beating out of your chest. Vines around the throat simulate the shortness of breath that accompanies acute anxiety episodes.</p>
             <p><strong>Mitigants.</strong> The magenta boxes — the only structured, geometric element in the piece — represent SSRIs like Escitalopram. They bring order to isolated corners of the composition. But the surrounding chaos remains: medication reduces cortisol, not everything.</p>
-            <a href="https://drive.google.com/file/d/16ginNHDcMK2H1UN7Z2Iu2jSS-Ab12vH6/view?usp=drive_link" class="rc-link" target="_blank" style="margin-top:.4rem;display:inline-flex;">
+            <a href="/Personal-Website/art_piece.pdf" class="rc-link" target="_blank" style="margin-top:.4rem;display:inline-flex;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M12 10v6m0 0-3-3m3 3 3-3M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2"/></svg>
               Full Written Explanation (PDF)
             </a>
@@ -1179,7 +1206,7 @@
 
       <div class="art-item">
         <div class="art-img-wrap">
-          <img src="/Personal-Website/perfectionism.jpg" alt="Perfectionism" loading="lazy" />
+          <img src="/Personal-Website/perfectionism.jpg" alt="Perfectionism" loading="lazy" onclick="openLightbox(this.src, this.alt)" />
         </div>
         <div class="art-caption">
           <span class="art-caption-title">Perfectionism</span>
@@ -1190,7 +1217,7 @@
 
       <div class="art-item">
         <div class="art-img-wrap">
-          <img src="/Personal-Website/stress.jpg" alt="Overworked" loading="lazy" />
+          <img src="/Personal-Website/stress.jpg" alt="Overworked" loading="lazy" onclick="openLightbox(this.src, this.alt)" />
         </div>
         <div class="art-caption">
           <span class="art-caption-title">Overworked</span>
@@ -1201,23 +1228,23 @@
 
       <div class="art-item">
         <div class="art-img-wrap">
-          <img src="/Personal-Website/expectations.jpg" alt="Expectations" loading="lazy" />
+          <img src="/Personal-Website/expectations.jpg" alt="Puppeteer" loading="lazy" onclick="openLightbox(this.src, this.alt)" />
         </div>
         <div class="art-caption">
-          <span class="art-caption-title">Expectations</span>
+          <span class="art-caption-title">Puppeteer</span>
           <span class="art-caption-medium">Graphite and acrylic on paper</span>
-          <p class="art-caption-desc">Good intentions pulling a skeleton toward something better — even as the strings doing the pulling tear it apart. Vines as external forces that shape and damage simultaneously.</p>
+          <p class="art-caption-desc">External forces pulling the strings — vivid, willful hands above controlling a skeleton that has no say in the direction it moves.</p>
         </div>
       </div>
 
       <div class="art-item">
         <div class="art-img-wrap">
-          <img src="/Personal-Website/better_future.JPG" alt="Better Future" loading="lazy" />
+          <img src="/Personal-Website/better_future.JPG" alt="Expectations" loading="lazy" onclick="openLightbox(this.src, this.alt)" />
         </div>
         <div class="art-caption">
-          <span class="art-caption-title">Better Future</span>
+          <span class="art-caption-title">Expectations</span>
           <span class="art-caption-medium">Oil on canvas</span>
-          <p class="art-caption-desc">Hands connected by climbing vines — one pair blooming into flowers and light, the lowest coming apart at the seams. Growth and destruction from the same source.</p>
+          <p class="art-caption-desc">Good intentions dragging the bottom hand into a better environment — even as the process destroys it. The vines that carry the flowers also unravel the hand below.</p>
         </div>
       </div>
 
@@ -1267,6 +1294,14 @@
   </div>
 </section>
 
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+</div>
+
 <!-- FOOTER -->
 <footer>
   <span>© 2026 Jacob Waldo · Palo Alto, CA</span>
@@ -1274,6 +1309,24 @@
 </footer>
 
 <script>
+/* ── LIGHTBOX ────────────────────────────────────────────── */
+function openLightbox(src, alt) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightboxImg');
+  img.src = src;
+  img.alt = alt || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close') && !e.target.closest('.lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+});
+
 /* ── ART ACCORDION ───────────────────────────────────────── */
 function toggleArtAcc() {
   const body = document.getElementById('art-acc-body');
