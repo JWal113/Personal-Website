@@ -204,23 +204,29 @@
 
     /* ── ABOUT ────────────────────────────────────────────── */
     .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+      display: grid; grid-template-columns: 1fr 1.5fr; gap: 3.5rem; align-items: start;
     }
-    .about-text p { color: var(--text-mid); margin-bottom: 1.2rem; font-size: .97rem; line-height: 1.8; }
+    .about-photo-wrap {
+      border-radius: 12px; overflow: hidden;
+      box-shadow: var(--shadow-md); aspect-ratio: 4/5;
+      border: 1px solid var(--border);
+    }
+    .about-photo {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 12%; display: block;
+    }
+    .about-right { display: flex; flex-direction: column; gap: 1.4rem; }
+    .about-text p { color: var(--text-mid); margin-bottom: 0; font-size: .97rem; line-height: 1.85; }
     .about-text p strong { color: var(--text); font-weight: 600; }
-    .about-stats {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
-      margin-top: 2.2rem; padding-top: 2rem; border-top: 1px solid var(--border);
-    }
-    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--blue); line-height: 1; }
-    .stat-label { font-size: .75rem; color: var(--text-dim); margin-top: .3rem; }
-    .about-edu { display: flex; flex-direction: column; gap: 1.2rem; }
+    .about-edu { display: flex; flex-direction: column; gap: 1rem; }
     .edu-card {
       background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
-      padding: 1.4rem 1.6rem; box-shadow: var(--shadow);
+      padding: 1.3rem 1.5rem; box-shadow: var(--shadow);
       border-left: 4px solid var(--blue);
     }
-    .edu-school { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: .25rem; }
+    .edu-school-row { display: flex; align-items: center; gap: .6rem; margin-bottom: .25rem; }
+    .edu-seal { width: 28px; height: 28px; object-fit: contain; opacity: .55; flex-shrink: 0; }
+    .edu-school { font-family: 'Playfair Display', serif; font-size: 1.05rem; }
     .edu-degree { font-size: .82rem; color: var(--text-mid); margin-bottom: .2rem; }
     .edu-detail { font-size: .78rem; color: var(--text-dim); font-style: italic; }
     .edu-gpa {
@@ -662,7 +668,9 @@
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 1000px) {
       .hero-inner { padding: 0 1.5rem 4rem; margin-left: 0; max-width: 100%; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo-wrap { max-width: 320px; }
+      .skills-certs-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
     }
     @media (max-width: 750px) {
@@ -698,10 +706,13 @@
     <h1>Jacob<br><em>Waldo</em></h1>
     <div class="hero-context">
       <div class="hero-context-bar"></div>
-      <div class="hero-context-text">
-        <span class="hero-context-top">Supplemental Instruction Leader · USC Dornsife</span>
+      <a href="https://dornsife.usc.edu/next-gen-science/supplemental-instruction/" target="_blank" class="hero-context-text" style="text-decoration:none;color:inherit;display:block;">
+        <span class="hero-context-top" style="display:flex;align-items:center;gap:.4rem;">
+          Supplemental Instruction Leader · USC Dornsife
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" style="opacity:.55;flex-shrink:0;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </span>
         <span class="hero-context-bottom">ECON 317: Statistics for Economists &nbsp;·&nbsp; ~100 students / semester</span>
-      </div>
+      </a>
     </div>
     <p class="hero-tagline">
       Incoming <strong style="color:#fff;font-weight:600;">Market Risk Analyst at Goldman Sachs</strong> ·
@@ -735,26 +746,27 @@
       <div class="section-line"></div>
     </div>
     <div class="about-grid">
-      <div>
-        <div class="about-text">
-          <p>Junior at <strong>USC</strong> studying Economics & Data Science with a minor in Mathematics (GPA 3.95). Joining <strong>Goldman Sachs</strong> as a Summer Market Risk Analyst, and hold an FRM Part I — top quartile across all four domains.</p>
-        </div>
-        <div class="about-stats">
-          <div><div class="stat-num">3.95</div><div class="stat-label">GPA at USC</div></div>
-          <div><div class="stat-num">76–100</div><div class="stat-label">FRM Percentile Range</div></div>
-          <div><div class="stat-num">26×</div><div class="stat-label">GPU Speedup Achieved</div></div>
-        </div>
+      <!-- LEFT: Photo -->
+      <div class="about-photo-wrap">
+        <img src="/Personal-Website/Untitled_Artwork.jpeg" alt="Jacob Waldo" class="about-photo" />
       </div>
-      <div class="about-edu">
-        <img src="/Personal-Website/Untitled_Artwork.jpeg" alt="Jacob Waldo"
-             style="width:120px;height:120px;object-fit:cover;object-position:center 12%;border-radius:50%;border:3px solid var(--blue-bd);box-shadow:var(--shadow);margin-bottom:.4rem;" />
-        <div class="edu-card">
-          <div class="edu-school">University of Southern California</div>
-          <div class="edu-degree">B.S. Economics & Data Science · Minor in Mathematics</div>
-          <div class="edu-detail">Los Angeles, CA · Aug 2024 – Dec 2026</div>
-          <span class="edu-gpa">GPA 3.95 / 4.0</span>
+      <!-- RIGHT: Text + Education -->
+      <div class="about-right">
+        <div class="about-text">
+          <p>Junior at <strong>USC</strong> studying Economics & Data Science with a minor in Mathematics. Joining <strong>Goldman Sachs</strong> as a Summer Market Risk Analyst, with an FRM Part I in hand.</p>
         </div>
-        <p class="edu-prev">Previously · Chapman University · B.S. Computer Science & B.A. Economics · 4.0 GPA · transferred 2024</p>
+        <div class="about-edu">
+          <div class="edu-card">
+            <div class="edu-school-row">
+              <img src="/Personal-Website/TheSeal_Reg_0921.PNG" class="edu-seal" alt="USC seal" />
+              <div class="edu-school">University of Southern California</div>
+            </div>
+            <div class="edu-degree">B.S. Economics & Data Science · Minor in Mathematics</div>
+            <div class="edu-detail">Los Angeles, CA · Aug 2024 – Dec 2026</div>
+            <span class="edu-gpa">GPA 3.95 / 4.0</span>
+          </div>
+          <p class="edu-prev">Previously · Chapman University · B.S. Computer Science & B.A. Economics · 4.0 GPA · transferred 2024</p>
+        </div>
       </div>
     </div>
 
@@ -798,6 +810,10 @@
               <li>Lead <strong>3 sessions per week</strong> for ~100 undergraduates per semester in ECON 317 (Statistics for Economists), writing notes, problem sets, and exam reviews from scratch.</li>
               <li>One of only <strong>2 SI Leaders</strong> in USC's economics department.</li>
             </ul>
+            <a href="https://dornsife.usc.edu/next-gen-science/supplemental-instruction/" class="rc-link" target="_blank" style="margin-top:.7rem;display:inline-flex;font-size:.79rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              USC Dornsife · Supplemental Instruction Program
+            </a>
           </div>
         </div>
       </div>
