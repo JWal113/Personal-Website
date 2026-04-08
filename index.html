@@ -664,6 +664,11 @@
       display: none; /* hidden on desktop */
     }
 
+    /* ── MOBILE NAV ───────────────────────────────────────── */
+    .nav-hamburger { display: none; }
+    .mobile-nav-overlay { display: none; }
+    .mobile-nav-drawer { display: none; }
+
     /* Mobile indicator — hidden on desktop */
     .carousel-mobile-indicator { display: none; }
 
@@ -689,31 +694,31 @@
       .rc-header { flex-direction: column; }
       footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
 
-      /* ── HERO: photo strip on top, dark text below ── */
+      /* ── HERO: full-bleed photo, text overlaid at bottom ── */
       #hero {
-        min-height: auto;
-        display: flex; flex-direction: column; align-items: stretch;
-        background: #0a0f1e;
+        min-height: 92vh;
+        display: flex; align-items: flex-end;
       }
       .hero-bg-photo {
-        position: relative; inset: auto;
-        height: 220px; width: 100%; flex-shrink: 0;
+        position: absolute; inset: 0;
         transform: none;
-        background-position: center 25%;
+        background-position: left center;
         background-size: cover;
       }
-      /* bottom fade from photo into dark section */
-      .hero-bg-photo::after {
-        content: '';
-        position: absolute; bottom: 0; left: 0; right: 0; height: 70px;
-        background: linear-gradient(transparent, #0a0f1e);
+      .hero-bg-overlay {
+        display: block;
+        background: linear-gradient(
+          to bottom,
+          rgba(10,15,30,.08)  0%,
+          rgba(10,15,30,.25) 35%,
+          rgba(10,15,30,.78) 62%,
+          rgba(10,15,30,.97) 100%
+        );
       }
-      .hero-bg-overlay { display: none; }
       .hero-inner {
-        position: relative; z-index: 1;
+        position: relative; z-index: 2;
         max-width: 100%; margin: 0;
-        padding: 1.2rem 1.6rem 3rem;
-        background: #0a0f1e;
+        padding: 0 1.6rem 3.5rem;
       }
       .hero-inner::before { display: none; }
       .hero-badges { flex-wrap: wrap; gap: .45rem; }
@@ -735,14 +740,54 @@
         margin-bottom: .8rem;
       }
 
-      /* truncate art intro to 3 lines */
-      .art-intro {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        margin-bottom: 1.8rem;
+      /* ── HAMBURGER BUTTON ── */
+      .nav-hamburger {
+        display: flex; flex-direction: column; justify-content: center; gap: 5px;
+        background: none; border: none; cursor: pointer; padding: .3rem; z-index: 101;
       }
+      .nav-hamburger span {
+        display: block; width: 22px; height: 2px;
+        background: var(--text); border-radius: 2px;
+        transition: transform .25s ease, opacity .25s ease;
+      }
+      .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+      .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      /* ── MOBILE NAV OVERLAY ── */
+      .mobile-nav-overlay {
+        display: block; position: fixed; inset: 0; z-index: 98;
+        background: rgba(0,0,0,.45);
+        opacity: 0; visibility: hidden;
+        transition: opacity .3s, visibility .3s;
+      }
+      .mobile-nav-overlay.open { opacity: 1; visibility: visible; }
+
+      /* ── MOBILE NAV DRAWER ── */
+      .mobile-nav-drawer {
+        display: flex; position: fixed;
+        top: 0; right: 0; bottom: 0; width: 68%; max-width: 260px;
+        z-index: 99; background: var(--bg);
+        border-left: 1px solid var(--border);
+        box-shadow: -4px 0 24px rgba(0,0,0,.12);
+        flex-direction: column; padding: 5.5rem 2rem 2rem;
+        transform: translateX(100%);
+        transition: transform .3s ease;
+      }
+      .mobile-nav-drawer.open { transform: translateX(0); }
+      .mobile-nav-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+      .mobile-nav-drawer li { border-bottom: 1px solid var(--border); }
+      .mobile-nav-drawer a {
+        display: block; padding: 1rem .25rem;
+        font-size: 1rem; font-weight: 500; color: var(--text);
+        text-decoration: none; letter-spacing: .01em;
+        transition: color .2s;
+      }
+      .mobile-nav-drawer a:hover { color: var(--blue); }
+
+      /* ── ABOUT: hide headshot, let text fill full width ── */
+      .about-photo-wrap { display: none; }
+      .about-grid { grid-template-columns: 1fr !important; }
 
       /* ── ART: 2-column grid ── */
       .art-gallery { grid-template-columns: repeat(2, 1fr); gap: .85rem; }
@@ -858,7 +903,22 @@
     <li><a href="#art">Art</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile nav drawer -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+<div class="mobile-nav-drawer" id="mobileNavDrawer">
+  <ul>
+    <li><a href="#about"    onclick="closeMobileNav()">About</a></li>
+    <li><a href="#research" onclick="closeMobileNav()">Research</a></li>
+    <li><a href="#skills"   onclick="closeMobileNav()">Toolkit</a></li>
+    <li><a href="#art"      onclick="closeMobileNav()">Art</a></li>
+    <li><a href="#contact"  onclick="closeMobileNav()">Contact</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -1568,6 +1628,23 @@ function goToSlide(n) {
 }
 function prevSlide() { goToSlide(_currentSlide - 1); }
 function nextSlide() { goToSlide(_currentSlide + 1); }
+
+/* ── MOBILE NAV ─────────────────────────────────────────── */
+function toggleMobileNav() {
+  const btn = document.getElementById('navHamburger');
+  const drawer = document.getElementById('mobileNavDrawer');
+  const overlay = document.getElementById('mobileNavOverlay');
+  const open = drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+  btn.classList.toggle('open');
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeMobileNav() {
+  document.getElementById('navHamburger').classList.remove('open');
+  document.getElementById('mobileNavDrawer').classList.remove('open');
+  document.getElementById('mobileNavOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
 /* ── SKILLS COLLAPSE TOGGLE ─────────────────────────────── */
 function toggleSkills(btn) {
