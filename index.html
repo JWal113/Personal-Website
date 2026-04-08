@@ -694,36 +694,43 @@
       .rc-header { flex-direction: column; }
       footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
 
-      /* ── HERO: diagonal photo panel + dark content below ── */
+      /* ── HERO: framed photo card + dark content below ── */
       #hero {
         min-height: auto;
         display: flex; flex-direction: column; align-items: stretch;
         background: #0a0f1e;
+        overflow: visible; /* let card shadow breathe */
       }
-      /* Photo becomes a natural flow element with a diagonal bottom cut */
+      /* Photo as a rounded card — full width, flat top (against nav), curved bottom */
       .hero-bg-photo {
         position: relative; inset: auto;
-        height: 300px; width: 100%; flex-shrink: 0;
+        height: 290px; width: 100%; flex-shrink: 0;
         transform: none;
         background-position: left 18%;
         background-size: cover;
-        /* diagonal: left side drops lower than right, exposing Jake on the left */
-        clip-path: polygon(0 0, 100% 0, 100% 72%, 0 100%);
+        border-radius: 0 0 26px 26px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(10,15,30,.7);
       }
-      /* subtle darkening at photo bottom so diagonal edge isn't abrupt */
+      /* Brand-tinted overlay: deep blue at top, clear in middle, dark at bottom */
       .hero-bg-photo::after {
         content: '';
-        position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-        background: linear-gradient(transparent, rgba(10,15,30,.55));
+        position: absolute; inset: 0;
+        background: linear-gradient(
+          165deg,
+          rgba(14,28,72,.55) 0%,
+          rgba(10,15,30,.05) 50%,
+          rgba(10,15,30,.6) 100%
+        );
         pointer-events: none;
       }
       .hero-bg-overlay { display: none; }
-      /* Content section slides up slightly to tuck under the diagonal */
+      /* Content tucks up slightly under the card's rounded edge */
       .hero-inner {
         position: relative; z-index: 1;
-        max-width: 100%; margin: -2.8rem 0 0;
+        max-width: 100%; margin: -1.2rem 0 0;
+        padding: 2rem 1.6rem 3.5rem;
         background: #0a0f1e;
-        padding: 1.8rem 1.6rem 3.5rem;
       }
       .hero-inner::before { display: none; }
       .hero-badges { flex-wrap: wrap; gap: .45rem; }
