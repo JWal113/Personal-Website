@@ -76,6 +76,7 @@
     }
     .hero-bg-photo {
       position: absolute; inset: 0;
+      z-index: 0; /* explicit — overlay must sit above */
       background-image: url('/Personal-Website/teaching.png');
       background-size: cover;
       background-position: center center;
@@ -83,6 +84,7 @@
     }
     .hero-bg-overlay {
       position: absolute; inset: 0;
+      z-index: 1; /* above photo, below hero-inner (z-index:2) */
       background:
         linear-gradient(to left, rgba(10,15,30,0) 30%, rgba(10,15,30,0.82) 62%, rgba(10,15,30,0.96) 100%),
         linear-gradient(to bottom, rgba(10,15,30,0) 65%, rgba(10,15,30,0.45) 100%);
@@ -696,9 +698,12 @@
     @media (max-width: 750px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      section { padding: 4.5rem 1.5rem; }
+      section { padding: 5.5rem 1.8rem; }
       .rc-header { flex-direction: column; }
       footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
+
+      /* ── BADGES: hide on mobile ── */
+      .badge-mob-hide { display: none; }
 
       /* ── HERO: framed photo card + dark content below ── */
       #hero {
@@ -734,12 +739,17 @@
       /* Content tucks up slightly under the card's rounded edge */
       .hero-inner {
         position: relative; z-index: 1;
-        max-width: 100%; margin: -1.2rem 0 0;
-        padding: 2rem 1.6rem 3.5rem;
+        max-width: 100%; margin: -1rem 0 0;
+        padding: 2.6rem 1.8rem 2.5rem;
         background: #0a0f1e;
       }
       .hero-inner::before { display: none; }
-      .hero-badges { flex-wrap: wrap; gap: .45rem; }
+      /* Hero element spacing on mobile */
+      .hero-eyebrow { margin-bottom: 1.1rem; }
+      .hero-inner h1 { margin-bottom: 1.6rem; }
+      .hero-tagline { margin-bottom: 2rem; font-size: .93rem; }
+      .hero-badges { flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+      .hero-cta { margin-bottom: 0; }
 
       /* ── HERO: h1 one line + buttons row ── */
       .hero-inner h1 { font-size: 2.4rem; white-space: nowrap; }
@@ -759,24 +769,27 @@
       .section-header {
         position: relative;
         margin-bottom: 0;
-        padding-bottom: 1.4rem;
+        padding-bottom: 1.8rem;
+        padding-right: 2.2rem; /* room for chevron */
         cursor: pointer;
         border-bottom: 1px solid var(--border);
         display: flex; flex-direction: column;
       }
+      .section-header .section-label { margin-bottom: .5rem; }
+      .section-header .section-title { line-height: 1.25; }
       .section-toggle-btn {
         display: flex; align-items: center; justify-content: center;
-        position: absolute; top: .1rem; right: 0;
+        position: absolute; top: .2rem; right: 0;
         background: none; border: none; cursor: pointer;
-        padding: .3rem; color: var(--text-dim);
+        padding: .4rem; color: var(--text-dim);
       }
       .section-toggle-btn svg { transition: transform .3s ease; }
       .section-body {
         max-height: 0;
         overflow: hidden;
-        transition: max-height .5s ease;
+        transition: max-height .55s ease;
       }
-      .section-body.open { max-height: 9999px; padding-top: 2.6rem; }
+      .section-body.open { max-height: 9999px; padding-top: 3rem; padding-bottom: .5rem; }
       section.sec-expanded .section-toggle-btn svg { transform: rotate(180deg); }
 
       /* contact-section: hide its inline title on mobile (we use section-header) */
@@ -948,6 +961,29 @@
         padding: 1.5rem 1.2rem !important;
         border-top: 1px solid var(--border) !important;
       }
+
+      /* ── GENERAL MOBILE BREATHING ROOM ── */
+      /* Dividers get a bit more visual weight */
+      .divider { height: 2px; background: var(--border); }
+
+      /* Timeline: more gap between entries */
+      .timeline { gap: 1.4rem; }
+      .timeline-header { padding: 1rem 1rem 1rem .9rem; }
+
+      /* About exp header: more vertical space */
+      .about-exp-header { margin: 3rem 0 2rem; }
+
+      /* Research: more space between description groups */
+      .rc-desc-group { margin-bottom: .6rem; }
+
+      /* Contact links: more padding */
+      .contact-link { padding: 1.1rem .8rem; gap: 1rem; }
+
+      /* Art gallery: a little more gap */
+      .art-gallery { gap: 1rem; }
+
+      /* Cert card: more vertical padding */
+      .cert-card { padding: 1.6rem; }
     }
   </style>
 </head>
@@ -1003,9 +1039,9 @@
     </p>
     <div class="hero-badges">
       <span class="badge blue"><span class="dot"></span>Goldman Sachs — Summer 2026</span>
-      <span class="badge"><span class="dot"></span>USC GPA 3.95 / 4.0</span>
+      <span class="badge badge-mob-hide"><span class="dot"></span>USC GPA 3.95 / 4.0</span>
       <span class="badge"><span class="dot"></span>FRM® Part I — Passed</span>
-      <span class="badge"><span class="dot"></span>Los Angeles, CA</span>
+      <span class="badge badge-mob-hide"><span class="dot"></span>Los Angeles, CA</span>
     </div>
     <div class="hero-cta">
       <a href="https://drive.google.com/file/d/1h-Wy5k-q3RvWpvC5XXOeFl1ttr2hpMWs/view?usp=drive_link" class="btn btn-primary" target="_blank">View Résumé</a>
