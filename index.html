@@ -176,14 +176,6 @@
     .btn-outline { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.3); backdrop-filter: blur(4px); }
     .btn-outline:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.6); }
 
-    /* scroll hint */
-    .scroll-hint {
-      position: absolute; bottom: 2rem; right: 4rem;
-      display: flex; flex-direction: column; align-items: center; gap: .4rem;
-      color: rgba(255,255,255,.4); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
-      animation: bob 2.2s ease-in-out infinite;
-    }
-    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 
     /* ── SECTION SHELL ────────────────────────────────────── */
     section { padding: 6.5rem 4rem; }
@@ -678,6 +670,10 @@
     /* Chart toggle button — hidden on desktop */
     .chart-toggle-btn { display: none; }
 
+
+    /* Skills collapse button — hidden on desktop */
+    .skills-more-btn { display: none; }
+
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 1000px) {
       .hero-inner { padding: 0 1.5rem 4rem; margin-right: 0; max-width: 100%; }
@@ -693,31 +689,33 @@
       .rc-header { flex-direction: column; }
       footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
 
-      /* ── HERO: mobile-first layout ── */
+      /* ── HERO: photo strip on top, dark text below ── */
       #hero {
         min-height: auto;
-        background: linear-gradient(160deg, #0a0f1e 0%, #0f1f3d 60%, #0a0f1e 100%);
-        display: flex; align-items: flex-start;
+        display: flex; flex-direction: column; align-items: stretch;
+        background: #0a0f1e;
       }
-      .hero-bg-photo { display: none; }
+      .hero-bg-photo {
+        position: relative; inset: auto;
+        height: 220px; width: 100%; flex-shrink: 0;
+        transform: none;
+        background-position: center 25%;
+        background-size: cover;
+      }
+      /* bottom fade from photo into dark section */
+      .hero-bg-photo::after {
+        content: '';
+        position: absolute; bottom: 0; left: 0; right: 0; height: 70px;
+        background: linear-gradient(transparent, #0a0f1e);
+      }
       .hero-bg-overlay { display: none; }
       .hero-inner {
-        max-width: 100%;
-        padding: 6rem 1.6rem 3.5rem;
-        display: flex; flex-direction: column; align-items: flex-start;
+        position: relative; z-index: 1;
+        max-width: 100%; margin: 0;
+        padding: 1.2rem 1.6rem 3rem;
+        background: #0a0f1e;
       }
-      /* small headshot circle in hero on mobile */
-      .hero-inner::before {
-        content: '';
-        display: block;
-        width: 72px; height: 72px;
-        border-radius: 50%;
-        background-image: url('/Personal-Website/Untitled_Artwork.jpeg');
-        background-size: cover; background-position: center 12%;
-        border: 2px solid rgba(255,255,255,.18);
-        margin-bottom: 1.1rem;
-        flex-shrink: 0;
-      }
+      .hero-inner::before { display: none; }
       .hero-badges { flex-wrap: wrap; gap: .45rem; }
 
       /* ── FEATURED ART: stack vertically ── */
@@ -754,6 +752,32 @@
       .art-caption { padding: .55rem .7rem .65rem; }
       .art-caption-title { font-size: .82rem; }
       .art-caption-medium { font-size: .58rem; margin-bottom: 0; }
+
+
+      /* ── SKILLS COLLAPSE ── */
+      .skills-collapse-wrap {
+        max-height: 7.5rem;
+        overflow: hidden;
+        position: relative;
+        transition: max-height .4s ease;
+      }
+      .skills-collapse-wrap::after {
+        content: '';
+        position: absolute; bottom: 0; left: 0; right: 0; height: 3rem;
+        background: linear-gradient(transparent, var(--bg2));
+        pointer-events: none;
+        transition: opacity .3s;
+      }
+      .skills-collapse-wrap.expanded { max-height: 80rem; }
+      .skills-collapse-wrap.expanded::after { opacity: 0; }
+      .skills-more-btn {
+        display: block; width: 100%;
+        font-family: 'JetBrains Mono', monospace; font-size: .72rem;
+        letter-spacing: .05em; color: var(--blue);
+        background: var(--blue-lt); border: 1px solid var(--blue-bd);
+        border-radius: 8px; padding: .65rem 1rem;
+        cursor: pointer; text-align: center; margin-top: .5rem;
+      }
 
       /* ── CAROUSEL: hide tab list, show single indicator ── */
       .carousel-tab-list { display: none; }
@@ -867,10 +891,6 @@
       <a href="https://drive.google.com/file/d/1h-Wy5k-q3RvWpvC5XXOeFl1ttr2hpMWs/view?usp=drive_link" class="btn btn-primary" target="_blank">View Résumé</a>
       <a href="#contact" class="btn btn-outline">Get in Touch</a>
     </div>
-  </div>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="17" height="17"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
   </div>
 </section>
 
@@ -1297,6 +1317,7 @@
       </div>
 
       <!-- RIGHT: Skills -->
+      <div class="skills-collapse-wrap" id="skills-collapse-wrap">
       <div class="skills-grid">
         <div class="skill-group">
           <div class="skill-group-title">Programming</div>
@@ -1337,6 +1358,8 @@
           </div>
         </div>
       </div>
+      </div><!-- /skills-collapse-wrap -->
+      <button class="skills-more-btn" onclick="toggleSkills(this)">Show all skills ↓</button>
 
     </div>
   </div>
@@ -1356,7 +1379,7 @@
 
     <!-- FEATURED PIECE -->
     <div class="art-featured">
-      <div class="art-featured-img-wrap">
+      <div class="art-featured-img-wrap" onclick="openLightbox('/Personal-Website/anxiety.jpeg','The Body\'s Response to Chronic Anxiety and Stress')">
         <img src="/Personal-Website/anxiety.jpeg" alt="The Body's Response to Chronic Anxiety and Stress" class="art-featured-img" />
       </div>
       <div class="art-featured-text">
@@ -1545,6 +1568,13 @@ function goToSlide(n) {
 }
 function prevSlide() { goToSlide(_currentSlide - 1); }
 function nextSlide() { goToSlide(_currentSlide + 1); }
+
+/* ── SKILLS COLLAPSE TOGGLE ─────────────────────────────── */
+function toggleSkills(btn) {
+  const wrap = document.getElementById('skills-collapse-wrap');
+  const expanded = wrap.classList.toggle('expanded');
+  btn.textContent = expanded ? 'Show less ↑' : 'Show all skills ↓';
+}
 
 /* ── READ-MORE TOGGLE ────────────────────────────────────── */
 function toggleRcMore(btn) {
