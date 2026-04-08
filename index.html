@@ -678,6 +678,12 @@
 
     /* Skills collapse button — hidden on desktop */
     .skills-more-btn { display: none; }
+    /* Mobile-only hero context duplicate: hidden on desktop */
+    .hero-context--mob { display: none; }
+    /* Section toggle buttons: hidden on desktop */
+    .section-toggle-btn { display: none; }
+    /* Contact: section-header hidden on desktop (uses contact-text as title column) */
+    #contact .section-header { display: none; }
 
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 1000px) {
@@ -734,6 +740,48 @@
       }
       .hero-inner::before { display: none; }
       .hero-badges { flex-wrap: wrap; gap: .45rem; }
+
+      /* ── HERO: h1 one line + buttons row ── */
+      .hero-inner h1 { font-size: 2.4rem; white-space: nowrap; }
+      h1 br { display: none; }
+      .hero-cta { flex-direction: row; }
+      .hero-cta .btn { flex: 1; text-align: center; font-size: .78rem; padding: .72rem .7rem; }
+
+      /* ── HERO: mobile-only SI context block (after photo) ── */
+      .hero-context--desk { display: none !important; }
+      .hero-context--mob {
+        display: inline-flex;
+        margin: 1.4rem 1.6rem 2.5rem;
+        align-self: flex-start;
+      }
+
+      /* ── SECTION COLLAPSIBLES ── */
+      .section-header {
+        position: relative;
+        margin-bottom: 0;
+        padding-bottom: 1.4rem;
+        cursor: pointer;
+        border-bottom: 1px solid var(--border);
+        display: flex; flex-direction: column;
+      }
+      .section-toggle-btn {
+        display: flex; align-items: center; justify-content: center;
+        position: absolute; top: .1rem; right: 0;
+        background: none; border: none; cursor: pointer;
+        padding: .3rem; color: var(--text-dim);
+      }
+      .section-toggle-btn svg { transition: transform .3s ease; }
+      .section-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .5s ease;
+      }
+      .section-body.open { max-height: 9999px; padding-top: 2.6rem; }
+      section.sec-expanded .section-toggle-btn svg { transform: rotate(180deg); }
+
+      /* contact-section: hide its inline title on mobile (we use section-header) */
+      #contact .section-header { display: flex; }
+      #contact .contact-text .contact-mobile-hide { display: none; }
 
       /* ── FEATURED ART: stack vertically ── */
       .art-featured {
@@ -924,22 +972,22 @@
 <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
 <div class="mobile-nav-drawer" id="mobileNavDrawer">
   <ul>
-    <li><a href="#about"    onclick="closeMobileNav()">About</a></li>
-    <li><a href="#research" onclick="closeMobileNav()">Research</a></li>
-    <li><a href="#skills"   onclick="closeMobileNav()">Toolkit</a></li>
-    <li><a href="#art"      onclick="closeMobileNav()">Art</a></li>
-    <li><a href="#contact"  onclick="closeMobileNav()">Contact</a></li>
+    <li><a href="#about"    onclick="closeMobileNavAndExpand('about')">About</a></li>
+    <li><a href="#research" onclick="closeMobileNavAndExpand('research')">Research</a></li>
+    <li><a href="#skills"   onclick="closeMobileNavAndExpand('skills')">Toolkit</a></li>
+    <li><a href="#art"      onclick="closeMobileNavAndExpand('art')">Art</a></li>
+    <li><a href="#contact"  onclick="closeMobileNavAndExpand('contact')">Contact</a></li>
   </ul>
 </div>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-bg-photo"></div>
   <div class="hero-bg-overlay"></div>
   <div class="hero-inner">
     <p class="hero-eyebrow">// Economics · Data Science · Finance</p>
     <h1>Jacob<br><em>Waldo</em></h1>
-    <div class="hero-context">
+    <!-- Desktop-only SI context (inline in text flow) -->
+    <div class="hero-context hero-context--desk">
       <div class="hero-context-bar"></div>
       <a href="https://dornsife.usc.edu/next-gen-science/supplemental-instruction/" target="_blank" class="hero-context-text" style="text-decoration:none;color:inherit;display:block;">
         <span class="hero-context-top" style="display:flex;align-items:center;gap:.4rem;">
@@ -964,6 +1012,19 @@
       <a href="#contact" class="btn btn-outline">Get in Touch</a>
     </div>
   </div>
+  <!-- Photo: absolute on desktop (DOM order doesn't matter); relative card on mobile -->
+  <div class="hero-bg-photo"></div>
+  <!-- Mobile-only SI context (appears below photo) -->
+  <div class="hero-context hero-context--mob">
+    <div class="hero-context-bar"></div>
+    <a href="https://dornsife.usc.edu/next-gen-science/supplemental-instruction/" target="_blank" class="hero-context-text" style="text-decoration:none;color:inherit;display:block;">
+      <span class="hero-context-top" style="display:flex;align-items:center;gap:.4rem;">
+        Supplemental Instruction Leader · USC Dornsife
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" style="opacity:.55;flex-shrink:0;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </span>
+      <span class="hero-context-bottom">ECON 317: Statistics for Economists &nbsp;·&nbsp; ~100 students / semester</span>
+    </a>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -971,11 +1032,15 @@
 <!-- ABOUT + EXPERIENCE -->
 <section id="about">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" onclick="toggleSection('about')">
       <p class="section-label">01 / About</p>
       <h2 class="section-title">Background</h2>
       <div class="section-line"></div>
+      <button class="section-toggle-btn" aria-label="Toggle section">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
     </div>
+    <div class="section-body" id="about-body">
     <div class="about-grid">
       <!-- LEFT: Photo -->
       <div class="about-photo-wrap">
@@ -1090,6 +1155,7 @@
       </div>
 
     </div>
+    </div><!-- /section-body about-body -->
   </div>
 </section>
 
@@ -1098,11 +1164,15 @@
 <!-- RESEARCH -->
 <section id="research">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" onclick="toggleSection('research')">
       <p class="section-label">02 / Research & Projects</p>
       <h2 class="section-title">Selected Work</h2>
       <div class="section-line"></div>
+      <button class="section-toggle-btn" aria-label="Toggle section">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
     </div>
+    <div class="section-body" id="research-body">
     <div class="research-carousel-wrap">
 
       <!-- Carousel Tab Navigation -->
@@ -1337,6 +1407,7 @@
       </div><!-- /research-carousel-viewport -->
 
     </div><!-- /research-carousel-wrap -->
+    </div><!-- /section-body research-body -->
   </div>
 </section>
 
@@ -1345,11 +1416,15 @@
 <!-- SKILLS & CREDENTIALS -->
 <section id="skills" class="section-even">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" onclick="toggleSection('skills')">
       <p class="section-label">03 / Skills & Credentials</p>
       <h2 class="section-title">Toolkit & Credentials</h2>
       <div class="section-line"></div>
+      <button class="section-toggle-btn" aria-label="Toggle section">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
     </div>
+    <div class="section-body" id="skills-body">
     <div class="skills-certs-grid">
 
       <!-- LEFT: FRM Certification -->
@@ -1434,6 +1509,7 @@
       <button class="skills-more-btn" onclick="toggleSkills(this)">Show all skills ↓</button>
 
     </div>
+    </div><!-- /section-body skills-body -->
   </div>
 </section>
 
@@ -1442,11 +1518,15 @@
 <!-- ART / BEYOND THE RESUME -->
 <section id="art">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" onclick="toggleSection('art')">
       <p class="section-label">04 / Beyond the Resume</p>
       <h2 class="section-title">Art & Illustration</h2>
       <div class="section-line"></div>
+      <button class="section-toggle-btn" aria-label="Toggle section">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
     </div>
+    <div class="section-body" id="art-body">
     <p class="art-intro">Outside of coursework and research, I paint and draw. Most of the work explores psychology, the body, and social pressure, usually through a recurring cast of skeletons, vines, and hands. The pieces below are a mix of graphite, ink, and oil.</p>
 
     <!-- FEATURED PIECE -->
@@ -1527,6 +1607,7 @@
       </div>
 
     </div>
+    </div><!-- /section-body art-body -->
   </div>
 </section>
 
@@ -1535,11 +1616,22 @@
 <!-- CONTACT -->
 <section id="contact" class="section-even">
   <div class="container">
+    <!-- Mobile-only section header (hidden on desktop via CSS) -->
+    <div class="section-header" onclick="toggleSection('contact')">
+      <p class="section-label">05 / Contact</p>
+      <h2 class="section-title">Let's Connect</h2>
+      <div class="section-line"></div>
+      <button class="section-toggle-btn" aria-label="Toggle section">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <div class="section-body" id="contact-body">
     <div class="contact-inner">
       <div class="contact-text">
-        <div class="section-label" style="margin-bottom:.6rem;">05 / Contact</div>
-        <h2>Let's Connect</h2>
-        <div class="section-line" style="margin-bottom:1.2rem;"></div>
+        <!-- These are hidden on mobile (section-header above takes over) -->
+        <div class="section-label contact-mobile-hide" style="margin-bottom:.6rem;">05 / Contact</div>
+        <h2 class="contact-mobile-hide">Let's Connect</h2>
+        <div class="section-line contact-mobile-hide" style="margin-bottom:1.2rem;"></div>
         <p>Whether you're interested in discussing research, risk, or just want to connect — I'd love to hear from you.</p>
       </div>
       <div class="contact-links">
@@ -1563,6 +1655,7 @@
         </a>
       </div>
     </div>
+    </div><!-- /section-body contact-body -->
   </div>
 </section>
 
@@ -1656,6 +1749,33 @@ function closeMobileNav() {
   document.getElementById('mobileNavDrawer').classList.remove('open');
   document.getElementById('mobileNavOverlay').classList.remove('open');
   document.body.style.overflow = '';
+}
+
+/* ── SECTION COLLAPSIBLES ───────────────────────────────── */
+function toggleSection(id) {
+  // Only collapse/expand on mobile
+  if (window.innerWidth > 750) return;
+  var body = document.getElementById(id + '-body');
+  var section = document.getElementById(id);
+  if (!body) return;
+  var isOpen = body.classList.toggle('open');
+  section.classList.toggle('sec-expanded', isOpen);
+}
+function expandSection(id) {
+  var body = document.getElementById(id + '-body');
+  var section = document.getElementById(id);
+  if (!body) return;
+  body.classList.add('open');
+  section.classList.add('sec-expanded');
+}
+function closeMobileNavAndExpand(id) {
+  closeMobileNav();
+  // Wait for nav drawer to slide away, then expand + scroll
+  setTimeout(function() {
+    expandSection(id);
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 320);
 }
 
 /* ── SKILLS COLLAPSE TOGGLE ─────────────────────────────── */
