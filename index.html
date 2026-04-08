@@ -682,6 +682,31 @@
       .hero-inner { padding: 3rem 1.5rem; }
       .rc-header { flex-direction: column; }
       footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
+
+      /* ── HERO: show Jake's face on mobile ── */
+      #hero { min-height: 70vh; }
+      .hero-bg-photo {
+        background-position: right center;
+        transform: scaleX(-1);
+      }
+      .hero-bg-overlay {
+        background:
+          linear-gradient(to bottom, rgba(10,15,30,0.25) 0%, rgba(10,15,30,0.75) 55%, rgba(10,15,30,0.97) 100%);
+      }
+      .hero-inner {
+        max-width: 100%;
+        padding: 3rem 1.5rem 3.5rem;
+      }
+      .hero-badges { flex-wrap: wrap; gap: .45rem; }
+
+      /* ── ART: 2-column grid ── */
+      .art-gallery { grid-template-columns: repeat(2, 1fr); gap: .85rem; }
+
+      /* ── ART: hide long descriptions, keep title + medium ── */
+      .art-caption-desc { display: none; }
+      .art-caption { padding: .55rem .7rem .65rem; }
+      .art-caption-title { font-size: .82rem; }
+      .art-caption-medium { font-size: .58rem; margin-bottom: 0; }
     }
   </style>
 </head>
