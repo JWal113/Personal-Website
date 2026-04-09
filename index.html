@@ -477,20 +477,22 @@
       background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
       box-shadow: var(--shadow); overflow: hidden; max-width: 720px;
     }
-    .cert-top {
-      padding: 2rem 2.2rem; display: flex; gap: 1.8rem; align-items: flex-start;
+    .cert-logo-band {
+      background: var(--blue-lt);
+      border-bottom: 1px solid var(--blue-bd);
+      padding: 1.3rem 2.2rem;
+      display: flex; align-items: center;
     }
-    .cert-badge-box {
-      width: 60px; height: 60px; border-radius: 10px;
-      background: var(--blue-lt); border: 1px solid var(--blue-bd);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--blue);
-      font-weight: 700; flex-shrink: 0; letter-spacing: -.02em;
+    .cert-garp-logo {
+      height: 32px; width: auto; display: block;
+      mix-blend-mode: multiply; opacity: .88;
+    }
+    .cert-top {
+      padding: 1.8rem 2.2rem 1.2rem; display: flex; gap: 1.8rem; align-items: flex-start;
+      flex-wrap: wrap;
     }
     .cert-title { font-family: 'Playfair Display', serif; font-size: 1.18rem; margin-bottom: .25rem; }
     .cert-org { font-size: .82rem; color: var(--text-dim); margin-bottom: .8rem; }
-    /* Quartile note: full-width row below badge+title, on both desktop and mobile */
-    .cert-top { flex-wrap: wrap; }
     .cert-quartile {
       flex: 0 0 100%;
       font-size: .84rem; color: var(--text-mid);
@@ -997,8 +999,10 @@
       /* Art gallery: a little more gap */
       .art-gallery { gap: 1rem; }
 
-      /* Cert card: more vertical padding */
-      .cert-card { padding: 1.6rem; }
+      /* Cert card logo band: tighter on mobile */
+      .cert-logo-band { padding: 1rem 1.4rem; }
+      .cert-garp-logo { height: 26px; }
+      .cert-top { padding: 1.4rem 1.4rem 1rem; }
     }
   </style>
 </head>
@@ -1492,8 +1496,10 @@
 
       <!-- LEFT: FRM Certification -->
       <div class="cert-card">
+        <div class="cert-logo-band">
+          <img src="/Personal-Website/garp-logo.png" alt="GARP — Global Association of Risk Professionals" class="cert-garp-logo" />
+        </div>
         <div class="cert-top">
-          <div class="cert-badge-box">FRM<br>P1</div>
           <div>
             <h3 class="cert-title">FRM® Part I — Passed</h3>
             <p class="cert-org">Global Association of Risk Professionals · August 2025</p>
