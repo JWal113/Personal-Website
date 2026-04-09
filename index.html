@@ -132,12 +132,14 @@
       from { transform: scale(1) translate(0, 0); opacity: .75; }
       to   { transform: scale(1.13) translate(40px, 30px); opacity: 1; }
     }
-    /* Bottom fade — hero dissolves into the white content below */
+    /* Bottom dissolve — dot grid fades into white, tying the transition to the hero texture */
     #hero::after {
       content: '';
       position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      height: 120px; pointer-events: none;
-      background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
+      height: 160px; pointer-events: none;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.22) 1.5px, transparent 1.5px) 0 0 / 26px 26px,
+        linear-gradient(to bottom, transparent 10%, #ffffff 85%);
     }
     /* Subtle secondary glow — top-right of section, anchored to #hero */
     #hero::before {
