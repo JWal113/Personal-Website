@@ -132,34 +132,6 @@
       from { transform: scale(1) translate(0, 0); opacity: .75; }
       to   { transform: scale(1.13) translate(40px, 30px); opacity: 1; }
     }
-    /* White base fade — sits under the halftone dots */
-    #hero::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      height: 200px; pointer-events: none;
-      background: linear-gradient(to bottom, transparent 0%, #fff 72%);
-    }
-    /* Halftone wrapper — positioned above the white fade */
-    .hero-halftone {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
-      height: 200px; pointer-events: none;
-    }
-    /* Large dots — dense at the top of the transition, fade out downward */
-    .hero-halftone::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(circle, #0a0f1e 8px, transparent 8px) 0 0 / 30px 30px;
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.80) 0%, transparent 62%);
-      mask-image:         linear-gradient(to bottom, rgba(0,0,0,.80) 0%, transparent 62%);
-    }
-    /* Small dots — fill the middle zone, bridging large dots to white */
-    .hero-halftone::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(circle, #0a0f1e 3.5px, transparent 3.5px) 15px 15px / 30px 30px;
-      -webkit-mask-image: linear-gradient(to bottom, transparent 18%, rgba(0,0,0,.55) 48%, transparent 80%);
-      mask-image:         linear-gradient(to bottom, transparent 18%, rgba(0,0,0,.55) 48%, transparent 80%);
-    }
     /* Subtle secondary glow — top-right of section, anchored to #hero */
     #hero::before {
       content: '';
@@ -869,7 +841,7 @@
         overflow-x: clip; /* prevent glow blob from causing horizontal scroll */
       }
       /* Decorative desktop elements not needed on mobile */
-      .hero-glow, #hero::before, #hero::after, .hero-halftone { display: none; }
+      .hero-glow, #hero::before { display: none; }
       /* Photo as a rounded card — full width, flat top (against nav), curved bottom */
       .hero-bg-photo {
         position: relative; inset: auto;
@@ -1329,9 +1301,6 @@
       </a>
     </div>
   </div>
-
-  <!-- Halftone transition — dark dots dissolving into white (desktop only) -->
-  <div class="hero-halftone" aria-hidden="true"></div>
 
   <!-- Mobile-only SI context (sits below photo in mobile flex flow) -->
   <div class="hero-context hero-context--mob">
