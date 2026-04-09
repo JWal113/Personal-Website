@@ -132,12 +132,12 @@
       from { transform: scale(1) translate(0, 0); opacity: .75; }
       to   { transform: scale(1.13) translate(40px, 30px); opacity: 1; }
     }
-    /* Bottom vignette — makes the hero-to-content cut feel intentional */
+    /* Bottom fade — hero dissolves into the white content below */
     #hero::after {
       content: '';
       position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      height: 72px; pointer-events: none;
-      background: linear-gradient(to bottom, transparent, rgba(10,15,30,.75));
+      height: 120px; pointer-events: none;
+      background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
     }
     /* Subtle secondary glow — top-right of section, anchored to #hero */
     #hero::before {
@@ -151,7 +151,7 @@
     .hero-inner {
       position: relative; z-index: 2;
       display: flex; flex-direction: column; justify-content: center;
-      padding: 3.5rem 2.5rem 3.5rem 5rem;
+      padding: 3.5rem 2.5rem 5.5rem 5rem;
       max-width: 100%;
     }
     /* Dot-grid texture behind text */
@@ -165,7 +165,7 @@
     .hero-right {
       position: relative; z-index: 2;
       display: flex; flex-direction: column; justify-content: center;
-      padding: 3.5rem 3.5rem 3.5rem 1.5rem;
+      padding: 3.5rem 3.5rem 5.5rem 1.5rem;
       gap: 1.2rem;
     }
     /* Teaching photo — contained frame */
@@ -845,7 +845,10 @@
         display: flex; flex-direction: column; align-items: stretch;
         background: #0a0f1e;
         overflow: visible; /* let card shadow breathe */
+        overflow-x: clip; /* prevent glow blob from causing horizontal scroll */
       }
+      /* Decorative desktop elements not needed on mobile */
+      .hero-glow, #hero::before, #hero::after { display: none; }
       /* Photo as a rounded card — full width, flat top (against nav), curved bottom */
       .hero-bg-photo {
         position: relative; inset: auto;
@@ -1318,8 +1321,6 @@
     </a>
   </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- ABOUT + EXPERIENCE -->
 <section id="about">
