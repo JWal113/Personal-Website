@@ -133,13 +133,13 @@
       from { transform: scale(1) translate(0, 0); opacity: .75; }
       to   { transform: scale(1.13) translate(40px, 30px); opacity: 1; }
     }
-    /* Subtle secondary glow — bottom-right for depth */
-    .hero-glow::after {
+    /* Subtle secondary glow — top-right of section, anchored to #hero */
+    #hero::before {
       content: '';
-      position: absolute;
-      width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(59,130,246,.1) 0%, transparent 65%);
-      bottom: -300px; right: -350px;
+      position: absolute; z-index: 0; pointer-events: none;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,189,248,.06) 0%, transparent 65%);
+      top: -120px; right: -60px;
     }
     .hero-bg-overlay { display: none; }
     .hero-inner {
@@ -168,22 +168,24 @@
       background-image: url('teaching.webp');
       background-size: cover;
       background-position: center center;
-      transform: scaleX(-1);
+      transform: none;
       border-radius: 14px;
       overflow: hidden;
       aspect-ratio: 16 / 9;
       width: 100%;
-      box-shadow: 0 22px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.07);
+      box-shadow: 0 22px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.12);
     }
     /* Soft bottom vignette on photo */
     .hero-bg-photo::after {
       content: ''; position: absolute; inset: 0; pointer-events: none;
-      background:
-        linear-gradient(to bottom, transparent 45%, rgba(10,15,30,.55) 100%),
-        linear-gradient(to right, rgba(10,15,30,.18) 0%, transparent 35%);
+      background: linear-gradient(to bottom, transparent 50%, rgba(10,15,30,.5) 100%);
     }
-    /* SI context below photo — no bottom margin since gap handles spacing */
-    .hero-context--desk { margin-bottom: 0; }
+    /* SI context below photo — full width to match photo, no bottom margin */
+    .hero-context--desk {
+      display: flex;
+      width: 100%;
+      margin-bottom: 0;
+    }
     .hero-eyebrow {
       font-family: 'JetBrains Mono', monospace;
       font-size: .72rem;
@@ -198,9 +200,19 @@
       font-weight: 700;
       line-height: 1.02;
       color: #fff;
-      margin-bottom: 1rem;
+      margin-bottom: 0;
     }
     h1 em { color: #93c5fd; font-style: italic; }
+    /* Blue accent stroke under the hero name */
+    .hero-inner h1::after {
+      content: '';
+      display: block;
+      width: 52px; height: 3px;
+      background: linear-gradient(to right, #3b82f6, rgba(59,130,246,0));
+      border-radius: 2px;
+      margin-top: 1rem;
+      margin-bottom: 1.4rem;
+    }
     /* teaching context tag — sits right under the name */
     .hero-context {
       display: inline-flex; align-items: center; gap: .6rem;
@@ -869,7 +881,6 @@
 
       /* ── HERO: h1 one line + buttons row ── */
       .hero-inner h1 { font-size: 2.4rem; white-space: nowrap; }
-      h1 br { display: none; }
       .hero-cta { flex-direction: row; }
       .hero-cta .btn { flex: 1; text-align: center; font-size: .78rem; padding: .72rem .7rem; }
 
@@ -1255,7 +1266,7 @@
   <!-- LEFT: text content -->
   <div class="hero-inner">
     <p class="hero-eyebrow">// Economics · Data Science · Finance</p>
-    <h1>Jacob <br><em>Waldo</em></h1>
+    <h1>Jacob <em>Waldo</em></h1>
     <p class="hero-tagline">
       Incoming <strong style="color:#fff;font-weight:600;">Market Risk Analyst at Goldman Sachs</strong> ·
       USC · FRM Part I — passed, top quartile across all four domains.
