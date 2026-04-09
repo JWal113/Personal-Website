@@ -701,6 +701,16 @@
     /* Section hooks: mobile-only preview teaser */
     .section-hook { display: none; }
 
+    /* ── GLOBAL TAP OPTIMIZATION ─────────────────────────── */
+    /* Remove iOS blue flash — we use :active states instead */
+    * { -webkit-tap-highlight-color: transparent; }
+    /* Eliminate 300ms tap delay on all interactive elements */
+    a, button, [onclick], input[type=range],
+    .art-img-wrap, .rm-fade, .section-header,
+    .timeline-header, .art-featured-img-wrap { touch-action: manipulation; }
+    /* Pointer cursor on all clickable non-button elements */
+    [onclick]:not(button):not(a) { cursor: pointer; }
+
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 1000px) {
       .hero-inner { padding: 0 1.5rem 4rem; margin-right: 0; max-width: 100%; }
@@ -1003,6 +1013,111 @@
       .cert-logo-band { padding: 1rem 1.4rem; }
       .cert-garp-logo { height: 26px; }
       .cert-top { padding: 1.4rem 1.4rem 1rem; }
+
+      /* ── MOBILE: TOUCH TARGETS (minimum 44 × 44 px) ──────── */
+
+      /* Hero CTA buttons */
+      .hero-cta .btn { min-height: 44px; padding: .9rem .7rem; font-size: .78rem; }
+
+      /* Section collapse chevron */
+      .section-toggle-btn {
+        width: 44px; height: 44px; padding: 0;
+        top: 0; right: -2px;
+        display: flex; align-items: center; justify-content: center;
+      }
+
+      /* Research carousel arrows */
+      .carousel-tab-arr { width: 44px; height: 44px; }
+
+      /* Chart toggle / skills expand */
+      .chart-toggle-btn { min-height: 44px; padding: .75rem 1rem; }
+      .skills-more-btn  { min-height: 44px; padding: .75rem 1rem; }
+
+      /* Art "Read the explanation" accordion button: full-width, centred */
+      .art-acc-btn {
+        min-height: 44px; width: 100%;
+        justify-content: center; padding: .65rem 1.2rem;
+        font-size: .84rem;
+      }
+
+      /* Lightbox close — bigger, easier to hit */
+      .lightbox-close { width: 48px; height: 48px; top: 1rem; right: 1rem; font-size: 1.1rem; }
+
+      /* Timeline accordion rows */
+      .timeline-header { min-height: 56px; }
+
+      /* ── INLINE LINKS → FULL-WIDTH BUTTON TREATMENT ──────── */
+
+      /* Research paper / SI program links */
+      .rc-link {
+        display: flex; width: 100%;
+        justify-content: center; align-items: center;
+        background: var(--blue-lt); border: 1px solid var(--blue-bd) !important;
+        border-radius: 8px; padding: .75rem 1rem;
+        font-size: .84rem; font-weight: 500;
+        min-height: 44px; margin-top: .7rem;
+        border-bottom: none !important; text-decoration: none;
+      }
+      /* Art explanation PDF link (inside accordion) */
+      .art-acc-inner .rc-link { margin-top: .6rem; }
+
+      /* GARP "View Digital Badge" link */
+      .cert-badge-link {
+        display: flex; width: 100%;
+        justify-content: center; align-items: center;
+        background: var(--blue-lt); border: 1px solid var(--blue-bd);
+        border-radius: 8px; padding: .75rem 1rem;
+        font-size: .84rem; min-height: 44px; margin-top: .55rem;
+      }
+
+      /* ── CHART TABS: FULL-WIDTH SEGMENTED CONTROL ────────── */
+      .chart-header { flex-direction: column; align-items: stretch; gap: .55rem; }
+      .chart-tabs { display: flex; width: 100%; border-radius: 8px; }
+      .chart-tab {
+        flex: 1; padding: .7rem .3rem;
+        font-size: .69rem; min-height: 44px;
+        white-space: nowrap;
+      }
+
+      /* ── SENSITIVITY SLIDER: FULL-WIDTH, LARGER THUMB ────── */
+      .sens-controls { flex-direction: column; align-items: stretch; gap: .9rem; }
+      input[type=range] { width: 100%; height: 36px; }
+      input[type=range]::-webkit-slider-thumb { width: 26px; height: 26px; }
+      input[type=range]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--blue); cursor: pointer; border: none; }
+      .sens-result { flex-direction: column; gap: .8rem; }
+      .sens-card { min-width: 0; }
+
+      /* ── …MORE PILL: VISIBLE TAP TARGET ─────────────────── */
+      .rm-fade span {
+        padding: .28rem .8rem;
+        background: rgba(255,255,255,.96);
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        font-size: .78rem; font-weight: 500;
+        color: var(--text-dim);
+        box-shadow: 0 1px 4px rgba(0,0,0,.07);
+      }
+      .section-even .rm-wrap.rm-clamped .rm-fade span {
+        background: rgba(248,250,252,.97);
+      }
+
+      /* ── TAP / ACTIVE FEEDBACK (replaces hover on touch) ─── */
+      .btn:active                       { opacity: .78; transform: scale(.97); transition: opacity .1s, transform .1s; }
+      .contact-link:active              { opacity: .82; background: var(--bg3); }
+      .timeline-header:active           { background: var(--bg3) !important; }
+      .carousel-tab-arr:active          { background: var(--bg3); border-color: var(--blue-bd); color: var(--blue); }
+      .chart-toggle-btn:active,
+      .skills-more-btn:active           { background: #dbeafe; border-color: var(--blue); }
+      .art-acc-btn:active               { background: var(--bg2); border-color: var(--blue-bd); }
+      .section-header:active            { background: rgba(15,23,42,.03); }
+      .rm-fade:active span              { background: var(--blue-lt); border-color: var(--blue-bd); color: var(--blue); }
+      .rc-link:active,
+      .cert-badge-link:active           { background: #dbeafe; border-color: var(--blue); }
+      .art-img-wrap:active img          { opacity: .85; transition: opacity .1s; }
+      .art-featured-img-wrap:active img { opacity: .85; transition: opacity .1s; }
+      .mobile-nav-drawer a:active       { color: var(--blue); background: var(--blue-lt); border-radius: 4px; padding-left: .5rem; }
+      .hero-context--mob a:active       { opacity: .72; }
+      .hero-context--mob                { transition: opacity .15s; }
     }
   </style>
 </head>
@@ -2038,6 +2153,56 @@ function updateSens(val) {
 }
 // Initialize
 updateSens(5);
+
+/* ── SWIPE GESTURES ────────────────────────────────────── */
+
+// Research carousel: swipe left/right to navigate slides
+(function() {
+  var vp = document.querySelector('.research-carousel-viewport');
+  if (!vp) return;
+  var sx = 0, sy = 0;
+  vp.addEventListener('touchstart', function(e) {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  }, { passive: true });
+  vp.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    // Only trigger if horizontal swipe dominates and is large enough
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
+      dx < 0 ? nextSlide() : prevSlide();
+    }
+  }, { passive: true });
+})();
+
+// Mobile nav drawer: swipe right to close
+(function() {
+  var drawer = document.getElementById('mobileNavDrawer');
+  if (!drawer) return;
+  var sx = 0;
+  drawer.addEventListener('touchstart', function(e) {
+    sx = e.touches[0].clientX;
+  }, { passive: true });
+  drawer.addEventListener('touchend', function(e) {
+    if (e.changedTouches[0].clientX - sx > 55) closeMobileNav();
+  }, { passive: true });
+})();
+
+// Lightbox: swipe down to close
+(function() {
+  var lb = document.getElementById('lightbox');
+  if (!lb) return;
+  var sy = 0;
+  lb.addEventListener('touchstart', function(e) {
+    sy = e.touches[0].clientY;
+  }, { passive: true });
+  lb.addEventListener('touchend', function(e) {
+    if (e.changedTouches[0].clientY - sy > 65) {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }, { passive: true });
+})();
 </script>
 </body>
 </html>
