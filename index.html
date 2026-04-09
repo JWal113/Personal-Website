@@ -132,14 +132,34 @@
       from { transform: scale(1) translate(0, 0); opacity: .75; }
       to   { transform: scale(1.13) translate(40px, 30px); opacity: 1; }
     }
-    /* Bottom dissolve — dot grid fades into white, tying the transition to the hero texture */
+    /* Bottom halftone dissolve — dots grow from invisible at top to large at bottom */
     #hero::after {
       content: '';
       position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      height: 160px; pointer-events: none;
+      height: 220px; pointer-events: none;
+      /* Three dot layers: small tight grid fades in first, then medium, then large */
       background:
-        radial-gradient(circle, rgba(255,255,255,.22) 1.5px, transparent 1.5px) 0 0 / 26px 26px,
-        linear-gradient(to bottom, transparent 10%, #ffffff 85%);
+        radial-gradient(circle, #fff 2.5px, transparent 2.5px) 0 0           / 16px 16px,
+        radial-gradient(circle, #fff 4px,   transparent 4px)   8px 8px        / 24px 24px,
+        radial-gradient(circle, #fff 6px,   transparent 6px)   4px 4px        / 36px 36px,
+        linear-gradient(to bottom, transparent 0%, #fff 92%);
+      /* Mask: transparent at top → opaque at bottom, staggered per layer */
+      -webkit-mask-image: linear-gradient(to bottom,
+        transparent  0%,
+        transparent 15%,
+        rgba(0,0,0,.15) 30%,
+        rgba(0,0,0,.45) 52%,
+        rgba(0,0,0,.78) 70%,
+        #000 88%
+      );
+      mask-image: linear-gradient(to bottom,
+        transparent  0%,
+        transparent 15%,
+        rgba(0,0,0,.15) 30%,
+        rgba(0,0,0,.45) 52%,
+        rgba(0,0,0,.78) 70%,
+        #000 88%
+      );
     }
     /* Subtle secondary glow — top-right of section, anchored to #hero */
     #hero::before {
