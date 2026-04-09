@@ -50,4 +50,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://www.jakewaldo.com/sitemap.xml
+Sitemap: https://jakewaldo.com/sitemap.xml
