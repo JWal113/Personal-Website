@@ -14,7 +14,6 @@ User-agent: DuckDuckBot
 Allow: /
 
 # ── AI assistants used for browsing / recruiting ────────────
-# Allow: these bots are used by people actively looking you up
 User-agent: ChatGPT-User
 Allow: /
 
@@ -25,7 +24,6 @@ User-agent: YouBot
 Allow: /
 
 # ── AI training crawlers (disallowed) ───────────────────────
-# These bots scrape content purely to train LLMs, not to surface you to users
 User-agent: GPTBot
 Disallow: /
 

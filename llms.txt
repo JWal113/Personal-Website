@@ -1,0 +1,42 @@
+# Jacob (Jake) Waldo
+
+> Personal portfolio website for Jacob Waldo — economics & data science student at USC, incoming Goldman Sachs Market Risk Analyst, quantitative researcher, and artist.
+
+## About
+
+Jake is a junior at the University of Southern California (B.S. Economics & Data Science, Minor in Mathematics, graduating Dec 2026), previously at Chapman University (transferred 2024, 4.0 GPA). He holds a 3.95 GPA at USC and has passed the FRM® Part I exam (August 2025, 76th–100th percentile across all four domains).
+
+He is an incoming Market Risk Analyst at Goldman Sachs (Summer 2026, Dallas, TX) in the Market Risk Division.
+
+## Research & Projects
+
+- **Early-Exercise Premium for American Puts** (2025): Bloomberg Terminal options analysis using Monte Carlo simulation with GPU acceleration (26× speedup via CuPy). Analyzed EEP bounds, regression coefficients, and sensitivity across strike prices and expirations using put-call parity.
+
+- **LLM Bias Detection Pipeline** (2025): LangGraph-powered pipeline investigating bias across GPT-5, GPT-5 Nano, Ollama, and Gemini models. MapReduce-style summarization reduces ~40-page document reviews from ~1 hour to under 5 minutes. Built in collaboration with Dr. James Alcala at USC.
+
+- **College Federal Reserve Challenge** (Oct 2025): National FOMC simulation competition. Analyzed Core CPI (2.9%), Core PCE (3.1%), and labor market conditions. Team recommendation: hold Fed Funds Rate at 4.00–4.25%.
+
+## Experience
+
+- **Goldman Sachs** — Incoming Market Risk Analyst, Market Risk Division, Dallas TX (Summer 2026)
+- **USC Dornsife** — Supplemental Instruction Leader for ECON 317: Statistics for Economists (Aug 2025–Present); leads 3 sessions/week for ~100 students
+- **USC** — Undergraduate Research Assistant with Dr. James Alcala investigating LLM bias (Jun 2025–Present)
+
+## Skills & Credentials
+
+- **Certification:** FRM® Part I — Passed August 2025, top quartile across all four exam domains
+- **Programming:** Python, NumPy, Pandas, Matplotlib, CuPy, SQL, Java, C++
+- **Quantitative Finance:** Monte Carlo Simulation, Derivatives Valuation, Fixed Income, Market Risk, Options Pricing
+- **Tools:** Bloomberg Terminal, Stata, Excel, LangGraph, Git, GPU Computing
+- **Mathematics:** Probability Theory, Linear Algebra, Econometrics, Multivariable Calculus, Time Series
+
+## Art & Illustration
+
+Jake creates graphite, ink, and oil works exploring themes of psychology, the body, chronic stress, perfectionism, and social pressure. His featured 2025 piece — "The Body's Response to Chronic Anxiety and Stress" (ink, coffee wash, and acrylic on paper) — illustrates the biology of chronic stress including the HPA axis, allostatic load, and SAM system. A written breakdown explaining the scientific and emotional dimensions is available on the site.
+
+## Contact
+
+- **Email:** jake.l.waldo@gmail.com
+- **LinkedIn:** https://www.linkedin.com/in/jacobwaldo235
+- **Website:** https://jakewaldo.com
+- **FRM Badge:** https://my.garp.org/DigitalBadgeFRMI?id=003Po00000knEdgIAE
