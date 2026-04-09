@@ -132,34 +132,33 @@
       from { transform: scale(1) translate(0, 0); opacity: .75; }
       to   { transform: scale(1.13) translate(40px, 30px); opacity: 1; }
     }
-    /* Bottom halftone dissolve — dots grow from invisible at top to large at bottom */
+    /* White base fade — sits under the halftone dots */
     #hero::after {
       content: '';
       position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      height: 220px; pointer-events: none;
-      /* Three dot layers: small tight grid fades in first, then medium, then large */
-      background:
-        radial-gradient(circle, #fff 2.5px, transparent 2.5px) 0 0           / 16px 16px,
-        radial-gradient(circle, #fff 4px,   transparent 4px)   8px 8px        / 24px 24px,
-        radial-gradient(circle, #fff 6px,   transparent 6px)   4px 4px        / 36px 36px,
-        linear-gradient(to bottom, transparent 0%, #fff 92%);
-      /* Mask: transparent at top → opaque at bottom, staggered per layer */
-      -webkit-mask-image: linear-gradient(to bottom,
-        transparent  0%,
-        transparent 15%,
-        rgba(0,0,0,.15) 30%,
-        rgba(0,0,0,.45) 52%,
-        rgba(0,0,0,.78) 70%,
-        #000 88%
-      );
-      mask-image: linear-gradient(to bottom,
-        transparent  0%,
-        transparent 15%,
-        rgba(0,0,0,.15) 30%,
-        rgba(0,0,0,.45) 52%,
-        rgba(0,0,0,.78) 70%,
-        #000 88%
-      );
+      height: 200px; pointer-events: none;
+      background: linear-gradient(to bottom, transparent 0%, #fff 72%);
+    }
+    /* Halftone wrapper — positioned above the white fade */
+    .hero-halftone {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
+      height: 200px; pointer-events: none;
+    }
+    /* Large dots — dense at the top of the transition, fade out downward */
+    .hero-halftone::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle, #0a0f1e 8px, transparent 8px) 0 0 / 30px 30px;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.80) 0%, transparent 62%);
+      mask-image:         linear-gradient(to bottom, rgba(0,0,0,.80) 0%, transparent 62%);
+    }
+    /* Small dots — fill the middle zone, bridging large dots to white */
+    .hero-halftone::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle, #0a0f1e 3.5px, transparent 3.5px) 15px 15px / 30px 30px;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 18%, rgba(0,0,0,.55) 48%, transparent 80%);
+      mask-image:         linear-gradient(to bottom, transparent 18%, rgba(0,0,0,.55) 48%, transparent 80%);
     }
     /* Subtle secondary glow — top-right of section, anchored to #hero */
     #hero::before {
@@ -870,7 +869,7 @@
         overflow-x: clip; /* prevent glow blob from causing horizontal scroll */
       }
       /* Decorative desktop elements not needed on mobile */
-      .hero-glow, #hero::before, #hero::after { display: none; }
+      .hero-glow, #hero::before, #hero::after, .hero-halftone { display: none; }
       /* Photo as a rounded card — full width, flat top (against nav), curved bottom */
       .hero-bg-photo {
         position: relative; inset: auto;
@@ -1330,6 +1329,9 @@
       </a>
     </div>
   </div>
+
+  <!-- Halftone transition — dark dots dissolving into white (desktop only) -->
+  <div class="hero-halftone" aria-hidden="true"></div>
 
   <!-- Mobile-only SI context (sits below photo in mobile flex flow) -->
   <div class="hero-context hero-context--mob">
