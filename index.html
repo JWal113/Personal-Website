@@ -3,11 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jacob Waldo</title>
+  <title>Jacob Waldo — Economist & Data Scientist</title>
+
+  <!-- Primary SEO -->
+  <meta name="description" content="Jacob Waldo (Jake Waldo) — USC Economics & Data Science graduate, FRM Part I, researcher, and educator. Personal site featuring research, writing, and work." />
+  <meta name="keywords" content="Jacob Waldo, Jake Waldo, Jacob L Waldo, jakewaldo, USC Economics, Data Science, FRM, economist" />
+  <meta name="author" content="Jacob Waldo" />
+  <link rel="canonical" href="https://www.jakewaldo.com/" />
+
+  <!-- Open Graph (LinkedIn, iMessage previews, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.jakewaldo.com/" />
+  <meta property="og:title" content="Jacob Waldo — Economist & Data Scientist" />
+  <meta property="og:description" content="Personal site for Jacob Waldo (Jake Waldo) — USC Economics & Data Science, FRM, researcher, and educator." />
+  <meta property="og:image" content="https://www.jakewaldo.com/headshot.png" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Jacob Waldo — Economist & Data Scientist" />
+  <meta name="twitter:description" content="Personal site for Jacob Waldo (Jake Waldo) — USC Economics & Data Science, FRM, researcher, and educator." />
+  <meta name="twitter:image" content="https://www.jakewaldo.com/headshot.png" />
+
+  <!-- Structured data: Person schema (helps Google Knowledge Panel) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Jacob Waldo",
+    "alternateName": "Jake Waldo",
+    "url": "https://www.jakewaldo.com/",
+    "image": "https://www.jakewaldo.com/headshot.png",
+    "sameAs": ["https://www.linkedin.com/in/jacobwaldo235"],
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Southern California",
+      "sameAs": "https://www.usc.edu"
+    },
+    "knowsAbout": ["Economics", "Data Science", "Financial Risk Management", "Econometrics"]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <!-- Fonts load asynchronously — no longer render-blocking -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" /></noscript>
+  <!-- Chart.js deferred — only needed for the interactive chart panel -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <!-- Preload the hero background — it's the LCP element -->
+  <link rel="preload" as="image" href="teaching.png" fetchpriority="high" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -668,8 +712,8 @@
       display: flex; justify-content: space-between; align-items: center;
       font-size: .77rem; color: var(--text-dim);
     }
-    footer a { color: var(--blue); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    footer a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+    footer a:hover { opacity: .75; }
 
     /* ── READ-MORE TOGGLE ─────────────────────────────────── */
     .rc-more-btn { display: none; } /* legacy — hidden on desktop */
@@ -1220,7 +1264,7 @@
     <div class="about-grid">
       <!-- LEFT: Photo -->
       <div class="about-photo-wrap">
-        <img src="headshot.png" alt="Jacob Waldo" class="about-photo" />
+        <img src="headshot.png" alt="Jacob Waldo" class="about-photo" loading="lazy" width="900" height="1349" />
       </div>
       <!-- RIGHT: Text + Education -->
       <div class="about-right">
@@ -1235,7 +1279,7 @@
         <div class="about-edu">
           <div class="edu-card">
             <div class="edu-school-row">
-              <img src="TheSeal_Reg_0921.PNG" class="edu-seal" alt="USC seal" />
+              <img src="TheSeal_Reg_0921.PNG" class="edu-seal" alt="USC seal" loading="lazy" width="1000" height="1027" />
               <div class="edu-school">University of Southern California</div>
             </div>
             <div class="edu-degree">B.S. Economics & Data Science · Minor in Mathematics</div>
@@ -1328,7 +1372,7 @@
             <ul class="timeline-bullets">
               <li>Directed operations for a rotating team of <strong>~15–20 daily staff</strong>, coordinating scheduling and safety for 150–500 daily patrons.</li>
             </ul>
-            <img src="pool.jpeg" alt="Palo Alto Swim and Sport" style="width:100%;border-radius:8px;margin-top:1rem;display:block;object-fit:cover;max-height:280px;" />
+            <img src="pool.jpeg" alt="Palo Alto Swim and Sport" loading="lazy" width="1600" height="918" style="width:100%;border-radius:8px;margin-top:1rem;display:block;object-fit:cover;max-height:280px;" />
           </div>
         </div>
       </div>
@@ -1523,7 +1567,7 @@
         <div class="fed-proof">
           <div class="fed-img-container">
             <!-- Will display the actual screenshot if the user saves it as fed_challenge.png -->
-            <img class="fed-screenshot" src="fed_challenge.png" alt="FOMC Meeting | October 2025 — Navigating Monetary Policy with No Risk-Free Path"
+            <img class="fed-screenshot" src="fed_challenge.png" loading="lazy" width="1600" height="808" alt="FOMC Meeting | October 2025 — Navigating Monetary Policy with No Risk-Free Path"
                  onerror="this.style.display='none'; document.getElementById('fedFallback').classList.add('show')" />
             <!-- Styled fallback if image not present -->
             <div id="fedFallback" class="fed-slide-fallback">
@@ -1617,7 +1661,7 @@
       <!-- LEFT: FRM Certification -->
       <div class="cert-card">
         <div class="cert-logo-band">
-          <img src="garp-logo.png" alt="GARP — Global Association of Risk Professionals" class="cert-garp-logo" />
+          <img src="garp-logo.png" alt="GARP — Global Association of Risk Professionals" class="cert-garp-logo" loading="lazy" width="820" height="198" />
         </div>
         <div class="cert-top">
           <div>
@@ -1720,7 +1764,7 @@
     <!-- FEATURED PIECE -->
     <div class="art-featured">
       <div class="art-featured-img-wrap" onclick="openLightbox('anxiety.jpeg','The Body\'s Response to Chronic Anxiety and Stress')">
-        <img src="anxiety.jpeg" alt="The Body's Response to Chronic Anxiety and Stress" class="art-featured-img" />
+        <img src="anxiety.jpeg" alt="The Body's Response to Chronic Anxiety and Stress" class="art-featured-img" loading="lazy" width="1392" height="2100" />
       </div>
       <div class="art-featured-text">
         <span class="rc-tag" style="display:inline-block;margin-bottom:.55rem;">Featured · 2025</span>
@@ -1997,6 +2041,8 @@ function switchTab(name) {
 }
 
 /* ── CHART 1: EEP BOUNDS — actual Bloomberg Terminal data ───── */
+/* Wrapped in DOMContentLoaded so it runs after the deferred Chart.js loads */
+document.addEventListener('DOMContentLoaded', function() {
 (function drawBounds() {
   const labels = [1,2,3,4,5,6,7,8,12,13,14,15,16,17,20,21,22,23,24,25,26,27,28,29,30,32,33,34,36,37,38,39,40,41,45,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,70,71,72,73,74,76,82,84,85,86,87,88,89,91,92,93,94,95,97,98,99,100,101,102,104,109,110,111,114,115,116,118,119,120,122,125,127,128,130,132,133,137,138,139,140,144,146,148,149,152,153,155,156,157,158,162,163,165,167,174,176,177,178,181,183,184,185,186,189,193,198,199,200,201,202,203,204,209,210,212,214,215,217,219,220,222,223,227,228,230,231,232,240,241];
   const eepMax = [14.8077,18.4053,11.1346,14.8249,14.0626,17.029,16.3928,15.9876,13.5129,12.2966,13.0413,12.8017,11.8786,12.0286,11.1667,10.6763,11.1425,11.3928,10.9652,10.7937,12.018,12.8361,11.0194,10.8361,10.7588,9.8052,9.6878,9.6047,8.8359,9.4555,9.6838,8.4474,9.8219,8.8078,7.2556,6.3158,7.1314,6.1838,6.574,5.9335,5.8567,6.4968,6.0152,6.3881,6.5721,6.7233,6.458,6.5488,7.5094,6.5668,7.2776,7.1732,7.6849,7.4542,7.2709,12.7723,10.4555,11.5462,10.8979,12.5399,12.6394,10.6511,7.7318,7.3227,6.9418,7.3734,7.6482,6.8847,8.6901,7.4418,7.3896,8.6339,7.9344,9.8026,7.8975,7.6786,8.0295,7.3177,7.3028,7.2568,6.7591,4.6668,4.4887,4.8793,3.9945,4.0006,3.8249,3.6798,3.4527,3.9154,3.5363,3.1307,3.3374,2.7758,3.9608,2.6208,3.9941,2.9043,2.6946,2.4852,2.3316,2.7992,1.2461,2.0007,2.1515,2.3038,2.5728,1.9957,2.2678,2.9634,2.8949,2.3529,2.6125,2.3294,3.8799,1.3471,0.8756,1.9909,1.2493,1.8593,2.0622,2.1589,2.8185,2.81,5.879,5.4953,2.3988,2.3229,2.859,2.6265,2.6249,3.096,3.0775,0.7748,1.9385,1.9002,1.6955,1.6476,2.3805,3.1627,2.1786,1.5022,2.0093,1.7245,1.6703,1.4771,4.1121,4.9566,2.7821,1.8247];
@@ -2057,6 +2103,7 @@ function switchTab(name) {
     }
   });
 })();
+}); // end DOMContentLoaded
 
 /* ── CHART 2: COEFFICIENTS ───────────────────────────────── */
 function drawCoefs() {
@@ -2165,7 +2212,7 @@ updateSens(5);
 (function() {
   var vp = document.querySelector('.research-carousel-viewport');
   if (!vp) return;
-  var sx = 0, sy = 0, st = 0, tracking = false, adjSlide = null, adjDir = 0;
+  var sx = 0, sy = 0, st = 0, vpW = 0, tracking = false, adjSlide = null, adjDir = 0;
 
   function allSlides() { return vp.querySelectorAll('.research-slide'); }
   function getCurrent() { return vp.querySelector('.research-slide.active'); }
@@ -2179,6 +2226,7 @@ updateSens(5);
     sx = e.touches[0].clientX;
     sy = e.touches[0].clientY;
     st = Date.now();
+    vpW = vp.offsetWidth || 320; // read layout once here, never in touchmove
     tracking = false;
     adjSlide = null; adjDir = 0;
     // Kill CSS opacity/visibility transitions immediately so they can never
@@ -2205,8 +2253,6 @@ updateSens(5);
       adjDir = dx < 0 ? 1 : -1;
       var adjIdx = dx < 0 ? (_currentSlide + 1) % n : (_currentSlide - 1 + n) % n;
       adjSlide = slides[adjIdx];
-      var vpW = vp.offsetWidth || 320;
-
       // Snap adjacent slide into position off-screen with no transition/opacity fade
       adjSlide.style.cssText =
         'transition:none;opacity:1;visibility:visible;' +
@@ -2214,7 +2260,6 @@ updateSens(5);
         'transform:translateX(' + (adjDir * vpW) + 'px)';
     }
 
-    var vpW = vp.offsetWidth || 320;
     var s = getCurrent();
     if (s) { s.style.transition = 'none'; s.style.transform = 'translateX(' + dx + 'px)'; }
     if (adjSlide) adjSlide.style.transform = 'translateX(' + (adjDir * vpW + dx) + 'px)';
@@ -2223,7 +2268,6 @@ updateSens(5);
   function snapBack() {
     var s = getCurrent();
     var adj = adjSlide; adjSlide = null;
-    var vpW = vp.offsetWidth || 320;
 
     if (s) { s.style.transition = 'transform .22s ease'; s.style.transform = ''; }
     if (adj) {
@@ -2250,7 +2294,6 @@ updateSens(5);
 
     var dx  = e.changedTouches[0].clientX - sx;
     var dt  = Math.max(Date.now() - st, 1);
-    var vpW = vp.offsetWidth || 320;
     var commit = Math.abs(dx) > vpW * 0.28 || (Math.abs(dx) > 18 && Math.abs(dx) / dt > 0.45);
 
     if (commit) {
