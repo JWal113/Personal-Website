@@ -1,0 +1,55 @@
+# robots.txt — jakewaldo.com
+
+# ── Search engines (full access) ────────────────────────────
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# ── AI assistants used for browsing / recruiting ────────────
+# Allow: these bots are used by people actively looking you up
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# ── AI training crawlers (disallowed) ───────────────────────
+# These bots scrape content purely to train LLMs, not to surface you to users
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+# ── Default: allow everything else ──────────────────────────
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.jakewaldo.com/sitemap.xml
