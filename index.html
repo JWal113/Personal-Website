@@ -288,7 +288,7 @@
 
     /* ── RESEARCH CAROUSEL ────────────────────────────────── */
     .research-carousel-wrap { position: relative; }
-    .research-carousel-viewport { position: relative; }
+    .research-carousel-viewport { position: relative; overflow: hidden; }
     .research-slide {
       width: 100%; opacity: 0; visibility: hidden;
       position: absolute; top: 0; left: 0;
@@ -996,6 +996,22 @@
       /* Timeline: more gap between entries */
       .timeline { gap: 1.4rem; }
       .timeline-header { padding: 1rem 1rem 1rem .9rem; }
+      /* Timeline body: taller max-height so button content never clips */
+      .timeline-item.open .timeline-body { max-height: 700px; }
+      /* rc-links inside timeline accordions stay as plain inline links —
+         not the full-width button treatment used in research cards */
+      .timeline-body .rc-link {
+        display: inline-flex !important; width: auto !important;
+        background: none !important; border: none !important;
+        border-bottom: 1px solid var(--blue-bd) !important;
+        border-radius: 0 !important; padding: 0 !important;
+        min-height: 0 !important; margin-top: .7rem; font-size: .79rem;
+        justify-content: flex-start !important;
+      }
+      .timeline-body .rc-link:active {
+        opacity: .65 !important; background: none !important;
+        border-bottom-color: var(--blue) !important;
+      }
 
       /* About exp header: more vertical space */
       .about-exp-header { margin: 3rem 0 2rem; }
@@ -2145,57 +2161,127 @@ updateSens(5);
 
 /* ── SWIPE GESTURES ────────────────────────────────────── */
 
-// Research carousel: swipe with live drag feedback
+// Research carousel: Instagram-style swipe — adjacent slide peeks in as you drag
 (function() {
   var vp = document.querySelector('.research-carousel-viewport');
   if (!vp) return;
-  var sx = 0, sy = 0, tracking = false;
+  var sx = 0, sy = 0, st = 0, tracking = false, adjSlide = null, adjDir = 0;
 
-  function activeSlide() { return vp.querySelector('.research-slide.active'); }
+  function getCurrent() { return vp.querySelector('.research-slide.active'); }
+
+  function cleanSlide(el) { if (el) el.removeAttribute('style'); }
 
   vp.addEventListener('touchstart', function(e) {
     sx = e.touches[0].clientX;
     sy = e.touches[0].clientY;
+    st = Date.now();
     tracking = false;
-    var s = activeSlide();
+    adjSlide = null; adjDir = 0;
+    var s = getCurrent();
     if (s) s.style.transition = 'none';
   }, { passive: true });
 
   vp.addEventListener('touchmove', function(e) {
     var dx = e.touches[0].clientX - sx;
     var dy = e.touches[0].clientY - sy;
-    // Determine swipe axis on first movement
+
     if (!tracking) {
       if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-      tracking = Math.abs(dx) > Math.abs(dy);
+      if (Math.abs(dx) <= Math.abs(dy)) return; // vertical — let page scroll
+      tracking = true;
+
+      // Which slide is coming in?
+      var slides = vp.querySelectorAll('.research-slide');
+      var n = slides.length;
+      adjDir = dx < 0 ? 1 : -1;          // +1 = next slides in from right
+      var adjIdx = dx < 0
+        ? (_currentSlide + 1) % n
+        : (_currentSlide - 1 + n) % n;
+      adjSlide = slides[adjIdx];
+      var vpW = vp.offsetWidth || 320;
+
+      // Place adjSlide off-screen (no transition, no opacity fade)
+      adjSlide.style.cssText =
+        'transition:none;opacity:1;visibility:visible;' +
+        'position:absolute;top:0;left:0;width:100%;pointer-events:none;' +
+        'transform:translateX(' + (adjDir * vpW) + 'px)';
     }
-    if (!tracking) return;
-    var s = activeSlide();
-    if (s) s.style.transform = 'translateX(' + (dx * 0.3) + 'px)';
+
+    var vpW = vp.offsetWidth || 320;
+    var s = getCurrent();
+    if (s) { s.style.transition = 'none'; s.style.transform = 'translateX(' + dx + 'px)'; }
+    if (adjSlide) adjSlide.style.transform = 'translateX(' + (adjDir * vpW + dx) + 'px)';
   }, { passive: true });
 
   function snapBack() {
-    var s = activeSlide();
-    if (!s) return;
-    s.style.transition = 'transform .22s ease';
-    s.style.transform = '';
-    s.addEventListener('transitionend', function h() {
-      s.style.transition = '';
-      s.removeEventListener('transitionend', h);
-    });
+    var s = getCurrent();
+    var adj = adjSlide;
+    var vpW = vp.offsetWidth || 320;
+    if (s) {
+      s.style.transition = 'transform .22s ease';
+      s.style.transform = '';
+      s.addEventListener('transitionend', function h() {
+        s.style.transition = '';
+        s.removeEventListener('transitionend', h);
+      });
+    }
+    if (adj) {
+      adj.style.transition = 'transform .22s ease';
+      adj.style.transform = 'translateX(' + (adjDir * vpW) + 'px)';
+      adj.addEventListener('transitionend', function h() {
+        cleanSlide(adj);
+        adj.removeEventListener('transitionend', h);
+      });
+      adjSlide = null;
+    }
   }
 
   vp.addEventListener('touchend', function(e) {
-    var s = activeSlide();
-    var dx = e.changedTouches[0].clientX - sx;
-    var dy = e.changedTouches[0].clientY - sy;
     var wasTracking = tracking;
     tracking = false;
-    if (!wasTracking) { if (s) { s.style.transition = ''; s.style.transform = ''; } return; }
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
-      // Threshold met — clear transform, change slide
-      if (s) { s.style.transition = 'none'; s.style.transform = ''; }
-      dx < 0 ? nextSlide() : prevSlide();
+    if (!wasTracking) {
+      var s = getCurrent();
+      if (s) { s.style.transition = ''; s.style.transform = ''; }
+      return;
+    }
+
+    var dx = e.changedTouches[0].clientX - sx;
+    var dt = Math.max(Date.now() - st, 1);
+    var vpW = vp.offsetWidth || 320;
+    var speed = Math.abs(dx) / dt; // px/ms
+    var commit = Math.abs(dx) > vpW * 0.28 || (Math.abs(dx) > 18 && speed > 0.45);
+
+    if (commit) {
+      var s = getCurrent();
+      var adj = adjSlide;
+      var exitX = adjDir * -1 * vpW; // current exits opposite side
+
+      if (s) { s.style.transition = 'transform .28s ease'; s.style.transform = 'translateX(' + exitX + 'px)'; }
+      if (adj) { adj.style.transition = 'transform .28s ease'; adj.style.transform = 'translateX(0)'; }
+
+      setTimeout(function() {
+        var slides = vp.querySelectorAll('.research-slide');
+        var tabs  = document.querySelectorAll('.carousel-tab-item');
+        var n = slides.length;
+        slides.forEach(cleanSlide);                           // wipe all inline styles
+        slides[_currentSlide].classList.remove('active');
+        if (tabs[_currentSlide]) tabs[_currentSlide].classList.remove('active');
+        _currentSlide = adjDir > 0
+          ? (_currentSlide + 1) % n
+          : (_currentSlide - 1 + n) % n;
+        slides[_currentSlide].classList.add('active');
+        if (tabs[_currentSlide]) tabs[_currentSlide].classList.add('active');
+        // Update mobile counter
+        var cmi = document.getElementById('cmi');
+        if (cmi && tabs[_currentSlide]) {
+          cmi.querySelector('.cmi-tag').textContent   = tabs[_currentSlide].querySelector('.cti-tag').textContent;
+          cmi.querySelector('.cmi-title').textContent = tabs[_currentSlide].querySelector('.cti-title').textContent;
+          cmi.querySelector('.cmi-counter').textContent = (_currentSlide + 1) + ' / ' + n;
+        }
+        // Re-clamp any expanded read-more blocks
+        document.querySelectorAll('.rm-wrap').forEach(function(w) { w.classList.add('rm-clamped'); });
+        adjSlide = null;
+      }, 290);
     } else {
       snapBack();
     }
