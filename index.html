@@ -2167,9 +2167,13 @@ updateSens(5);
   if (!vp) return;
   var sx = 0, sy = 0, st = 0, tracking = false, adjSlide = null, adjDir = 0;
 
+  function allSlides() { return vp.querySelectorAll('.research-slide'); }
   function getCurrent() { return vp.querySelector('.research-slide.active'); }
 
-  function cleanSlide(el) { if (el) el.removeAttribute('style'); }
+  // Re-enable the CSS opacity/visibility transitions after we're done
+  function restoreTransitions() {
+    allSlides().forEach(function(el) { el.style.transition = ''; });
+  }
 
   vp.addEventListener('touchstart', function(e) {
     sx = e.touches[0].clientX;
@@ -2177,8 +2181,10 @@ updateSens(5);
     st = Date.now();
     tracking = false;
     adjSlide = null; adjDir = 0;
-    var s = getCurrent();
-    if (s) s.style.transition = 'none';
+    // Kill CSS opacity/visibility transitions immediately so they can never
+    // fire during drag or the subsequent class-swap — this is the root cause
+    // of the "glitch" overlap effect.
+    allSlides().forEach(function(el) { el.style.transition = 'none'; });
   }, { passive: true });
 
   vp.addEventListener('touchmove', function(e) {
@@ -2187,20 +2193,21 @@ updateSens(5);
 
     if (!tracking) {
       if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-      if (Math.abs(dx) <= Math.abs(dy)) return; // vertical — let page scroll
+      if (Math.abs(dx) <= Math.abs(dy)) {
+        // Vertical scroll — restore CSS transitions and let the page scroll
+        restoreTransitions();
+        return;
+      }
       tracking = true;
 
-      // Which slide is coming in?
-      var slides = vp.querySelectorAll('.research-slide');
+      var slides = allSlides();
       var n = slides.length;
-      adjDir = dx < 0 ? 1 : -1;          // +1 = next slides in from right
-      var adjIdx = dx < 0
-        ? (_currentSlide + 1) % n
-        : (_currentSlide - 1 + n) % n;
+      adjDir = dx < 0 ? 1 : -1;
+      var adjIdx = dx < 0 ? (_currentSlide + 1) % n : (_currentSlide - 1 + n) % n;
       adjSlide = slides[adjIdx];
       var vpW = vp.offsetWidth || 320;
 
-      // Place adjSlide off-screen (no transition, no opacity fade)
+      // Snap adjacent slide into position off-screen with no transition/opacity fade
       adjSlide.style.cssText =
         'transition:none;opacity:1;visibility:visible;' +
         'position:absolute;top:0;left:0;width:100%;pointer-events:none;' +
@@ -2215,70 +2222,84 @@ updateSens(5);
 
   function snapBack() {
     var s = getCurrent();
-    var adj = adjSlide;
+    var adj = adjSlide; adjSlide = null;
     var vpW = vp.offsetWidth || 320;
-    if (s) {
-      s.style.transition = 'transform .22s ease';
-      s.style.transform = '';
-      s.addEventListener('transitionend', function h() {
-        s.style.transition = '';
-        s.removeEventListener('transitionend', h);
-      });
-    }
+
+    if (s) { s.style.transition = 'transform .22s ease'; s.style.transform = ''; }
     if (adj) {
       adj.style.transition = 'transform .22s ease';
       adj.style.transform = 'translateX(' + (adjDir * vpW) + 'px)';
       adj.addEventListener('transitionend', function h() {
-        cleanSlide(adj);
+        adj.removeAttribute('style');
         adj.removeEventListener('transitionend', h);
+        restoreTransitions();
       });
-      adjSlide = null;
+    } else if (s) {
+      s.addEventListener('transitionend', function h() {
+        s.style.transition = '';
+        s.removeEventListener('transitionend', h);
+        restoreTransitions();
+      });
     }
   }
 
   vp.addEventListener('touchend', function(e) {
     var wasTracking = tracking;
     tracking = false;
-    if (!wasTracking) {
-      var s = getCurrent();
-      if (s) { s.style.transition = ''; s.style.transform = ''; }
-      return;
-    }
+    if (!wasTracking) { restoreTransitions(); return; }
 
-    var dx = e.changedTouches[0].clientX - sx;
-    var dt = Math.max(Date.now() - st, 1);
+    var dx  = e.changedTouches[0].clientX - sx;
+    var dt  = Math.max(Date.now() - st, 1);
     var vpW = vp.offsetWidth || 320;
-    var speed = Math.abs(dx) / dt; // px/ms
-    var commit = Math.abs(dx) > vpW * 0.28 || (Math.abs(dx) > 18 && speed > 0.45);
+    var commit = Math.abs(dx) > vpW * 0.28 || (Math.abs(dx) > 18 && Math.abs(dx) / dt > 0.45);
 
     if (commit) {
-      var s = getCurrent();
-      var adj = adjSlide;
-      var exitX = adjDir * -1 * vpW; // current exits opposite side
+      var s    = getCurrent();
+      var adj  = adjSlide;
+      var exitX = adjDir * -1 * vpW;
 
-      if (s) { s.style.transition = 'transform .28s ease'; s.style.transform = 'translateX(' + exitX + 'px)'; }
+      if (s)   { s.style.transition   = 'transform .28s ease'; s.style.transform   = 'translateX(' + exitX + 'px)'; }
       if (adj) { adj.style.transition = 'transform .28s ease'; adj.style.transform = 'translateX(0)'; }
 
       setTimeout(function() {
-        var slides = vp.querySelectorAll('.research-slide');
-        var tabs  = document.querySelectorAll('.carousel-tab-item');
-        var n = slides.length;
-        slides.forEach(cleanSlide);                           // wipe all inline styles
+        var slides = allSlides();
+        var tabs   = document.querySelectorAll('.carousel-tab-item');
+        var n      = slides.length;
+        var newIdx = adjDir > 0 ? (_currentSlide + 1) % n : (_currentSlide - 1 + n) % n;
+
+        // Step 1 — disable transitions and strip every inline style so the
+        //   CSS class rules take full control.  All in one synchronous block
+        //   so the browser paints only the final state (no intermediate flash).
+        slides.forEach(function(el) {
+          el.style.transition  = 'none';
+          el.style.transform   = '';
+          el.style.opacity     = '';
+          el.style.visibility  = '';
+          el.style.position    = '';
+          el.style.top         = '';
+          el.style.left        = '';
+          el.style.width       = '';
+          el.style.pointerEvents = '';
+        });
+
+        // Step 2 — swap .active classes (still in the same task → single paint)
         slides[_currentSlide].classList.remove('active');
         if (tabs[_currentSlide]) tabs[_currentSlide].classList.remove('active');
-        _currentSlide = adjDir > 0
-          ? (_currentSlide + 1) % n
-          : (_currentSlide - 1 + n) % n;
+        _currentSlide = newIdx;
         slides[_currentSlide].classList.add('active');
         if (tabs[_currentSlide]) tabs[_currentSlide].classList.add('active');
+
+        // Step 3 — re-enable CSS transitions on the next animation frame
+        //   (after the browser has already painted the clean final state)
+        requestAnimationFrame(restoreTransitions);
+
         // Update mobile counter
         var cmi = document.getElementById('cmi');
         if (cmi && tabs[_currentSlide]) {
-          cmi.querySelector('.cmi-tag').textContent   = tabs[_currentSlide].querySelector('.cti-tag').textContent;
-          cmi.querySelector('.cmi-title').textContent = tabs[_currentSlide].querySelector('.cti-title').textContent;
+          cmi.querySelector('.cmi-tag').textContent    = tabs[_currentSlide].querySelector('.cti-tag').textContent;
+          cmi.querySelector('.cmi-title').textContent  = tabs[_currentSlide].querySelector('.cti-title').textContent;
           cmi.querySelector('.cmi-counter').textContent = (_currentSlide + 1) + ' / ' + n;
         }
-        // Re-clamp any expanded read-more blocks
         document.querySelectorAll('.rm-wrap').forEach(function(w) { w.classList.add('rm-clamped'); });
         adjSlide = null;
       }, 290);
@@ -2287,9 +2308,7 @@ updateSens(5);
     }
   }, { passive: true });
 
-  vp.addEventListener('touchcancel', function() {
-    tracking = false; snapBack();
-  }, { passive: true });
+  vp.addEventListener('touchcancel', function() { tracking = false; snapBack(); }, { passive: true });
 })();
 
 // Mobile nav drawer: swipe right to close
