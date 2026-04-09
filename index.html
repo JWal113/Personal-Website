@@ -489,6 +489,14 @@
     }
     .cert-title { font-family: 'Playfair Display', serif; font-size: 1.18rem; margin-bottom: .25rem; }
     .cert-org { font-size: .82rem; color: var(--text-dim); margin-bottom: .8rem; }
+    /* Quartile note: full-width row below badge+title, on both desktop and mobile */
+    .cert-top { flex-wrap: wrap; }
+    .cert-quartile {
+      flex: 0 0 100%;
+      font-size: .84rem; color: var(--text-mid);
+      margin: .1rem 0 .8rem;
+      padding-top: .1rem;
+    }
     .cert-badge-link {
       display: inline-flex; align-items: center; gap: .35rem;
       font-size: .78rem; color: var(--blue); text-decoration: none; font-weight: 500;
@@ -688,6 +696,8 @@
     .section-toggle-btn { display: none; }
     /* Contact: section-header hidden on desktop (uses contact-text as title column) */
     #contact .section-header { display: none; }
+    /* Section hooks: mobile-only preview teaser */
+    .section-hook { display: none; }
 
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 1000px) {
@@ -700,7 +710,7 @@
     @media (max-width: 750px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      section { padding: 5.5rem 1.8rem; }
+      section { padding: 5.5rem 1.3rem; }
       .rc-header { flex-direction: column; }
       footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
 
@@ -742,7 +752,7 @@
       .hero-inner {
         position: relative; z-index: 1;
         max-width: 100%; margin: -1rem 0 0;
-        padding: 2.6rem 1.8rem 2.5rem;
+        padding: 2.4rem 1.1rem 2.5rem;
         background: #0a0f1e;
       }
       .hero-inner::before { display: none; }
@@ -763,7 +773,7 @@
       .hero-context--desk { display: none !important; }
       .hero-context--mob {
         display: inline-flex;
-        margin: 1.4rem 1.6rem 2.5rem;
+        margin: 1.4rem 1.1rem 2.5rem;
         align-self: flex-start;
       }
 
@@ -793,6 +803,17 @@
       }
       .section-body.open { max-height: 9999px; padding-top: 3rem; padding-bottom: .5rem; }
       section.sec-expanded .section-toggle-btn svg { transform: rotate(180deg); }
+
+      /* ── SECTION HOOKS (preview teasers) ── */
+      .section-hook {
+        display: block;
+        font-size: .84rem;
+        color: var(--text-dim);
+        line-height: 1.6;
+        margin: .85rem 0 0;
+        padding-right: 1.8rem; /* don't run under chevron */
+      }
+      section.sec-expanded .section-hook { display: none; }
 
       /* contact-section: hide its inline title on mobile (we use section-header) */
       #contact .section-header { display: flex; }
@@ -1015,7 +1036,7 @@
   <div class="hero-bg-overlay"></div>
   <div class="hero-inner">
     <p class="hero-eyebrow">// Economics · Data Science · Finance</p>
-    <h1>Jacob<br><em>Waldo</em></h1>
+    <h1>Jacob <br><em>Waldo</em></h1>
     <!-- Desktop-only SI context (inline in text flow) -->
     <div class="hero-context hero-context--desk">
       <div class="hero-context-bar"></div>
@@ -1049,10 +1070,10 @@
     <div class="hero-context-bar"></div>
     <a href="https://dornsife.usc.edu/next-gen-science/supplemental-instruction/" target="_blank" class="hero-context-text" style="text-decoration:none;color:inherit;display:block;">
       <span class="hero-context-top" style="display:flex;align-items:center;gap:.4rem;">
-        Supplemental Instruction Leader · USC Dornsife
+        Supplemental Instruction Leader
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" style="opacity:.55;flex-shrink:0;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
       </span>
-      <span class="hero-context-bottom">ECON 317: Statistics for Economists &nbsp;·&nbsp; ~100 students / semester</span>
+      <span class="hero-context-bottom">USC · ECON 317: Statistics for Economists</span>
     </a>
   </div>
 </section>
@@ -1070,6 +1091,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
     </div>
+    <p class="section-hook">Incoming Goldman Sachs Market Risk Analyst · SI Leader for ~100 students · FRM Part I, top quartile.</p>
     <div class="section-body" id="about-body">
     <div class="about-grid">
       <!-- LEFT: Photo -->
@@ -1082,9 +1104,9 @@
           <p>Junior at <strong>USC</strong>, majoring in Economics & Data Science with a minor in Mathematics.</p>
           <div class="rm-wrap rm-clamped" style="--rm-h:4.8em">
             <p style="margin:0">I've never been great at memorization — I look up syntax, I struggle with state capitals, biology was never my thing. What I do well is understanding the logic behind things. That's what keeps pulling me toward analytical problems: macro trends, probability, risk, and finding the cleaner way to run a computation.</p>
+            <p style="margin:.8em 0 0">I'm always looking to grow, and I enjoy connecting with people who share that same problem-solving mindset.</p>
             <div class="rm-fade" onclick="rmExpand(this)"><span>…more</span></div>
           </div>
-          <p>I'm always looking to grow, and I enjoy connecting with people who share that same problem-solving mindset.</p>
         </div>
         <div class="about-edu">
           <div class="edu-card">
@@ -1205,6 +1227,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
     </div>
+    <p class="section-hook">Bloomberg Terminal options paper (with interactive charts), Fed Challenge presentation, and an LLM pipeline — all using real data.</p>
     <div class="section-body" id="research-body">
     <div class="research-carousel-wrap">
 
@@ -1463,6 +1486,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
     </div>
+    <p class="section-hook">FRM® Part I — top quartile across all four domains. Python, R, Bloomberg Terminal, and more skills inside.</p>
     <div class="section-body" id="skills-body">
     <div class="skills-certs-grid">
 
@@ -1473,14 +1497,12 @@
           <div>
             <h3 class="cert-title">FRM® Part I — Passed</h3>
             <p class="cert-org">Global Association of Risk Professionals · August 2025</p>
-            <p style="font-size:.84rem;color:var(--text-mid);margin-bottom:.8rem;">
-              Top quartile (76th–100th percentile) across all four exam domains.
-            </p>
             <a class="cert-badge-link" href="https://my.garp.org/DigitalBadgeFRMI?id=003Po00000knEdgIAE" target="_blank">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
               View Digital Badge
             </a>
           </div>
+          <p class="cert-quartile">Top quartile (76th–100th percentile) across all four exam domains.</p>
         </div>
         <div class="cert-scores">
           <div class="cert-score-item">
@@ -1565,6 +1587,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
     </div>
+    <p class="section-hook">Featured piece on the biology of anxiety and stress — with a full written breakdown. Plus a gallery of oil, ink, and graphite work.</p>
     <div class="section-body" id="art-body">
     <p class="art-intro">Outside of coursework and research, I paint and draw. Most of the work explores psychology, the body, and social pressure, usually through a recurring cast of skeletons, vines, and hands. The pieces below are a mix of graphite, ink, and oil.</p>
 
@@ -1667,6 +1690,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
     </div>
+    <p class="section-hook">Email, LinkedIn, and résumé — all listed below.</p>
     <div class="section-body" id="contact-body">
     <div class="contact-inner">
       <div class="contact-text">
