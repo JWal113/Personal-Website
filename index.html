@@ -947,22 +947,22 @@
         max-height: var(--rm-h, 5.6em);
         overflow: hidden;
       }
+      /* Horizontal fade: covers the last line's end and places …more inline */
       .rm-wrap.rm-clamped .rm-fade {
         display: flex;
-        align-items: flex-end;
+        align-items: center;    /* vertically sit on the text baseline */
         justify-content: flex-end;
         position: absolute;
         bottom: 0; left: 0; right: 0;
-        height: 3em;
-        background: linear-gradient(transparent, rgba(255,255,255,.97) 52%);
+        height: 1.75em;         /* ~one line height */
+        background: linear-gradient(to right, transparent 0%, rgba(255,255,255,.97) 42%);
         cursor: pointer;
-        padding-right: 1px; padding-bottom: 1px;
       }
       .section-even .rm-wrap.rm-clamped .rm-fade {
-        background: linear-gradient(transparent, rgba(248,250,252,.97) 52%);
+        background: linear-gradient(to right, transparent 0%, rgba(248,250,252,.97) 42%);
       }
+      /* Plain grey text — looks like it continues inline from the sentence */
       .rm-fade span {
-        font-size: .82rem;
         color: var(--text-dim);
         line-height: 1;
         cursor: pointer;
@@ -1087,19 +1087,8 @@
       .sens-result { flex-direction: column; gap: .8rem; }
       .sens-card { min-width: 0; }
 
-      /* ── …MORE PILL: VISIBLE TAP TARGET ─────────────────── */
-      .rm-fade span {
-        padding: .28rem .8rem;
-        background: rgba(255,255,255,.96);
-        border-radius: 20px;
-        border: 1px solid var(--border);
-        font-size: .78rem; font-weight: 500;
-        color: var(--text-dim);
-        box-shadow: 0 1px 4px rgba(0,0,0,.07);
-      }
-      .section-even .rm-wrap.rm-clamped .rm-fade span {
-        background: rgba(248,250,252,.97);
-      }
+      /* …more active tap feedback */
+      .rm-fade:active span { color: var(--blue); }
 
       /* ── TAP / ACTIVE FEEDBACK (replaces hover on touch) ─── */
       .btn:active                       { opacity: .78; transform: scale(.97); transition: opacity .1s, transform .1s; }
@@ -2156,22 +2145,64 @@ updateSens(5);
 
 /* ── SWIPE GESTURES ────────────────────────────────────── */
 
-// Research carousel: swipe left/right to navigate slides
+// Research carousel: swipe with live drag feedback
 (function() {
   var vp = document.querySelector('.research-carousel-viewport');
   if (!vp) return;
-  var sx = 0, sy = 0;
+  var sx = 0, sy = 0, tracking = false;
+
+  function activeSlide() { return vp.querySelector('.research-slide.active'); }
+
   vp.addEventListener('touchstart', function(e) {
     sx = e.touches[0].clientX;
     sy = e.touches[0].clientY;
+    tracking = false;
+    var s = activeSlide();
+    if (s) s.style.transition = 'none';
   }, { passive: true });
+
+  vp.addEventListener('touchmove', function(e) {
+    var dx = e.touches[0].clientX - sx;
+    var dy = e.touches[0].clientY - sy;
+    // Determine swipe axis on first movement
+    if (!tracking) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      tracking = Math.abs(dx) > Math.abs(dy);
+    }
+    if (!tracking) return;
+    var s = activeSlide();
+    if (s) s.style.transform = 'translateX(' + (dx * 0.3) + 'px)';
+  }, { passive: true });
+
+  function snapBack() {
+    var s = activeSlide();
+    if (!s) return;
+    s.style.transition = 'transform .22s ease';
+    s.style.transform = '';
+    s.addEventListener('transitionend', function h() {
+      s.style.transition = '';
+      s.removeEventListener('transitionend', h);
+    });
+  }
+
   vp.addEventListener('touchend', function(e) {
+    var s = activeSlide();
     var dx = e.changedTouches[0].clientX - sx;
     var dy = e.changedTouches[0].clientY - sy;
-    // Only trigger if horizontal swipe dominates and is large enough
+    var wasTracking = tracking;
+    tracking = false;
+    if (!wasTracking) { if (s) { s.style.transition = ''; s.style.transform = ''; } return; }
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
+      // Threshold met — clear transform, change slide
+      if (s) { s.style.transition = 'none'; s.style.transform = ''; }
       dx < 0 ? nextSlide() : prevSlide();
+    } else {
+      snapBack();
     }
+  }, { passive: true });
+
+  vp.addEventListener('touchcancel', function() {
+    tracking = false; snapBack();
   }, { passive: true });
 })();
 
