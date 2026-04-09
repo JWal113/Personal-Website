@@ -101,7 +101,7 @@
     }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
-      color: var(--text-dim);
+      color: var(--text-mid);
       text-decoration: none;
       font-size: .8rem;
       font-weight: 500;
@@ -131,6 +131,13 @@
     @keyframes heroGlow {
       from { transform: scale(1) translate(0, 0); opacity: .75; }
       to   { transform: scale(1.13) translate(40px, 30px); opacity: 1; }
+    }
+    /* Bottom vignette — makes the hero-to-content cut feel intentional */
+    #hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      height: 72px; pointer-events: none;
+      background: linear-gradient(to bottom, transparent, rgba(10,15,30,.75));
     }
     /* Subtle secondary glow — top-right of section, anchored to #hero */
     #hero::before {
@@ -490,7 +497,7 @@
     }
     /* actual screenshot if it exists */
     .fed-screenshot {
-      width: 100%; display: block;
+      width: 100%; display: block; aspect-ratio: 1600 / 808;
     }
     /* stylized fallback slide (shown if image missing) */
     .fed-slide-fallback {
@@ -1258,6 +1265,7 @@
 </div>
 
 <!-- HERO -->
+<main>
 <section id="hero">
   <!-- Animated atmosphere glow -->
   <div class="hero-glow"></div>
@@ -1437,7 +1445,7 @@
             <ul class="timeline-bullets">
               <li>Directed operations for a rotating team of <strong>~15–20 daily staff</strong>, coordinating scheduling and safety for 150–500 daily patrons.</li>
             </ul>
-            <img src="pool.webp" alt="Palo Alto Swim and Sport" loading="lazy" style="width:100%;border-radius:8px;margin-top:1rem;display:block;object-fit:cover;max-height:280px;" />
+            <img src="pool.webp" alt="Palo Alto Swim and Sport" loading="lazy" style="width:100%;border-radius:8px;margin-top:1rem;display:block;object-fit:cover;max-height:280px;aspect-ratio:1600/918;" />
           </div>
         </div>
       </div>
@@ -1967,6 +1975,8 @@
   </button>
   <img class="lightbox-img" id="lightboxImg" src="" alt="" />
 </div>
+
+</main>
 
 <!-- FOOTER -->
 <footer>
