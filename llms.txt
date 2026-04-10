@@ -1,6 +1,6 @@
 # Jacob (Jake) Waldo
 
-> Personal portfolio website for Jacob Waldo — economics & data science student at USC, incoming Goldman Sachs Market Risk Analyst, quantitative researcher, and artist.
+> Personal portfolio website for Jacob Waldo — economics & data science student at USC, incoming Goldman Sachs Market Risk Intern, quantitative researcher, and artist.
 
 ## About
 
@@ -18,7 +18,7 @@ He is an incoming Market Risk Analyst at Goldman Sachs (Summer 2026, Dallas, TX)
 
 ## Experience
 
-- **Goldman Sachs** — Incoming Market Risk Analyst, Market Risk Division, Dallas TX (Summer 2026)
+- **Goldman Sachs** — Incoming Market Risk Intern, Market Risk Division, Dallas TX (Summer 2026)
 - **USC Dornsife** — Supplemental Instruction Leader for ECON 317: Statistics for Economists (Aug 2025–Present); leads 3 sessions/week for ~100 students
 - **USC** — Undergraduate Research Assistant with Dr. James Alcala investigating LLM bias (Jun 2025–Present)
 
